@@ -1,0 +1,77 @@
+方法一： opencv法
+import numpy as np
+import cv2
+import platform
+
+# Load an image
+img_color = cv2.imread('800.jpg', cv2.IMREAD_COLOR)
+img_gray = cv2.imread('800.jpg', cv2.IMREAD_GRAYSCALE)
+img_unchange = cv2.imread('800.jpg', cv2.IMREAD_UNCHANGED)
+
+'''
+cv2.IMREAD_COLOR : Loads a color image. Any transparency of image will be neglected. It is the default flag.
+cv2.IMREAD_GRAYSCALE : Loads image in grayscale mode
+cv2.IMREAD_UNCHANGED : Loads image as such including alpha channel
+
+阿尔法通道是一个8位的灰度通道，该通道用256级灰度来记录图像中的透明度信息，定义透明、不透明和半透明区域，其中白表示不透明，黑表示透明，灰表示半透明
+
+Note: Instead of these three flags, you can simply pass integers 1, 0 or -1 respectively.
+'''
+# Show all image
+if img_color is not None:
+    cv2.namedWindow('color image', cv2.WINDOW_NORMAL)
+    cv2.imshow('color image', img_color)
+    
+if img_gray is not None:
+    cv2.namedWindow('gray image', cv2.WINDOW_NORMAL)
+    cv2.imshow('gray image', img_gray)
+    
+if img_unchange is not None:
+    cv2.namedWindow('unchange image', cv2.WINDOW_NORMAL)
+    cv2.imshow('unchange image', img_unchange)
+    
+# Wait any key
+if platform.architecture()[0] == "64bit":
+    k = cv2.waitKey(0) & 0xFF
+else:
+    k = cv2.waitKey(0)
+
+while True:
+    # esc to quit
+    if k == 27:  
+        # Destroy all window
+        cv2.destroyAllWindows()
+        break
+    elif k == ord('s'):
+        cv2.imwrite('colorimage.png', img_color)
+        cv2.destroyAllWindows()
+        break
+
+方法二： matplotlib
+import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+
+img = cv2.imread('messi.jpg', 0)
+plt.imshow(img, cmap='gray', interpolation='bicubic')
+plt.xticks([]), plt.yticks([]) # hide tick values on x and y axis
+plt.show()
+
+方法三: pillow
+from PIL import Image
+img=Image.open('d:/dog.png')
+img.show()
+
+或者
+from PIL import Image
+import matplotlib.pyplot as plt
+img=Image.open('d:/dog.png')
+plt.figure("dog")
+plt.imshow(img)
+plt.show()
+
+print img.size  #图片的尺寸
+print img.mode  #图片的模式
+print img.format  #图片的格式
+img.save('d:/dog.jpg')
+
