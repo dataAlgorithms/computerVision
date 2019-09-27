@@ -1,0 +1,111 @@
+1. 翻转（部分图被截取）
+import cv2
+import numpy as np
+
+img = cv2.imread('800.jpg')
+num_rows, num_cols = img.shape[:2]
+rotation_matrix = cv2.getRotationMatrix2D((num_cols/2, num_rows/2), 30, 0.7)
+img_rotation = cv2.warpAffine(img, rotation_matrix, (num_cols, num_rows))
+cv2.imshow('Rotation', img_rotation)
+cv2.waitKey()
+
+2. 翻转（图没有被截取）
+import cv2
+import numpy as np
+
+img = cv2.imread('800.jpg')
+num_rows, num_cols = img.shape[:2]
+translation_matrix = np.float32([[1,0,int(0.5*num_cols)],[0,1,int(0.5*num_rows)]])
+rotation_matrix = cv2.getRotationMatrix2D((num_cols, num_rows), 30, 1)
+img_translation = cv2.warpAffine(img, translation_matrix, (2*num_cols, 2*num_rows))
+img_rotation = cv2.warpAffine(img_translation, rotation_matrix, (num_cols*2, num_rows*2))
+cv2.imshow('Rotation', img_rotation)
+cv2.waitKey()
+
+
+说明：
+仿射变换cv2.warpAffine()
+非关键字参数有src, M, dsize，分别表示源图像，变换矩阵，变换后的图像的长宽
+这里说一下放射变换的变换矩阵
+位移变换矩阵为：
+　　　　
+
+旋转变换矩阵：
+　　标准旋转变换矩阵为
+　　　　
+
+，但该矩阵没有考虑旋转变换时进行位移以及缩放操作，OpenCV中的旋转变换如下：
+　　　　
+
+，其中
+
+　　OpenCV中提供了一个函数获得这样一个矩阵
+M=cv2.getRotationMatrix2D(rotate_center, degree, scale)
+　　rotate_center为一个2元的元组，表示旋转中心坐标，degree表示逆时针旋转的角度，scale表示缩放的比例
+仿射变换矩阵：
+　　
+
+
+更多例子：（按角度翻转）
+import numpy as np
+import argparse
+import imutils
+import cv2
+
+def rotate(image, angle, center=None, scale=1.0):
+    (h, w) = image.shape[:2]
+    if center is None:
+        center = (w // 2, h // 2)
+        
+    M = cv2.getRotationMaxtrix2D(center, angle, scale)
+    rotated = cv2.warpAffine(image, M, (w, h))
+    return rotated
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+(h, w) = image.shape[:2]
+center = (w // 2, h // 2)
+
+M = cv2.getRotationMatrix2D(center, 45, 1.0)
+rotated = cv2.warpAffine(image, M, (w, h))
+cv2.imshow("Rotated by 45 Degrees", rotated)
+
+M = cv2.getRotationMatrix2D(center, -90, 1.0)
+rotated = cv2.warpAffine(image, M, (w, h))
+cv2.imshow("Rotated by -90 Degrees", rotated)
+
+rotated = rotate(image, 180)
+cv2.imshow("Rotated by 180 degrees", rotated)
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+
+
+更多例子： （按方向翻转）
+import argparse
+import cv2
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+flipped = cv2.flip(image, 1)
+cv2.imshow("Flipped Horizontally", flipped)
+
+flipped = cv2.flip(image, 0)
+cv2.imshow("Flipped Vertically", flipped)
+
+flipped = cv2.flip(image, -1)
+cv2.imshow("Flipped Horizontally & Vertically", flipped)
+cv2.waitKey(0)
