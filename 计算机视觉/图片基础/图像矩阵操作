@@ -1,0 +1,43 @@
+from __future__ import print_function
+import numpy as np
+import argparse
+import cv2
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+print("max of 255: {}".format(cv2.add(np.uint8([200]), np.uint8([100]))))
+print("min of 0:{}".format(cv2.subtract(np.uint8([50]), np.uint8([100]))))
+
+print("wrap around:{}".format(np.uint8([200]) + np.uint8([100])))
+print("wrap around:{}".format(np.uint8([50]) - np.uint8([100])))
+
+M = np.ones(image.shape, dtype="uint8") * 100
+added = cv2.add(image, M)
+cv2.imshow("Added", added)
+
+M = np.ones(image.shape, dtype="uint8") * 50
+subtracted = cv2.subtract(image, M)
+cv2.imshow("Subtracted", subtracted)
+cv2.waitKey(0)
+
+说明：
+Simple image arithmetic
+    这里其实是opencv2提供的一些矩阵操作的函数。
+    算术运算：cv::add(), cv::addWeighted(), cv::scaleAdd(); cv::subtract, cv::absdiff; cv::multiply; cv::divide， 还可以通过mask参数来掩模不需要处理的位。
+    位运算：cv::bitwise_and, cv::bitwise_or, cv::bitwise_xor, cv::bitwise_not
+    cv::max, cv::min
+    其他运算：cv::sqrt, cv::pow, cv::abs, cv::cuberoot, cv::exp, cv::log
+    上面这些函数都是针对矩阵的每一个元素对应操作的。更方便的是，矩阵的加减乘除、bitwise operators….都被重载了。inv()求逆、t()求转置、determinant()求行列式、norm()求范数、cross()求两个向量的叉乘、dot()求两个向量的点乘。
+    当需要将一个多通道图像分离时，调用cv::split()方法，用一个std::vector来保存中间量，最后又可以调用cv::merge()方法合成，代码如下：
+std::vector<cv::Mat> planes;
+cv::split(image1, planes);
+planes[0] += image2;
+cv::merge(planes, result);
+
+
