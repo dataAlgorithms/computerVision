@@ -1,0 +1,26 @@
+import numpy as np
+import argparse
+import cv2
+
+ap  = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+cropped = image[30:120, 240:335]
+cv2.imshow("T-Rex Face", cropped)
+cv2.waitKey(0)
+
+
+说明：
+1. Start y: The starting y coordinate. In this case, we
+start at y = 30.
+2. End y: The ending y coordinate. We will end our crop
+at y = 120.
+3. Start x: The starting x coordinate of the slice. We start
+the crop at x = 240.
+4. End x: The ending x-axis coordinate of the slice. Our
+slice ends at x = 335.
