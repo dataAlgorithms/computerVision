@@ -1,0 +1,62 @@
+1. 均值滤波(average blur)
+import numpy as np
+import argparse
+import cv2
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+blurred = np.hstack([
+    cv2.blur(image, (3, 3)),
+    cv2.blur(image, (5, 5)),
+    cv2.blur(image, (7, 7))])
+cv2.imshow("Averag", blurred)
+
+2. 高斯滤波(gaussian blur)
+blurred = np.hstack([
+    cv2.GaussianBlur(image, (3, 3), 0),
+    cv2.GaussianBlur(image, (5, 5), 0),
+    cv2.GaussianBlur(image, (7, 7), 0)])
+cv2.imshow("Gaussian", blurred)
+cv2.waitKey(0)
+说明：
+Gaussian blurring is similar to average blurring, but instead of
+using a simple mean, we are now using a weighted mean,
+where neighborhood pixels that are closer to the central
+pixel contribute more “weight” to the average
+
+
+
+3. 中值滤波(median blur)
+blurred = np.hstack([
+    cv2.medianBlur(image, 3),
+    cv2.medianBlur(image, 5),
+    cv2.medianBlur(image, 7)])
+cv2.imshow("Median", blurred)
+cv2.waitKey(0)
+
+说明：
+the median blur method has been most effective when removing salt-and-pepper noise
+
+4. 双边滤波(bilateral blur)
+blurred = np.hstack([
+    cv2.bilateralFilter(image, 5, 21, 21),
+    cv2.bilateralFilter(image, 7, 31, 31),
+    cv2.bilateralFilter(image, 9, 41, 41)])
+cv2.imshow("Bilateral", blurred)
+cv2.waitKey(0)
+
+
+说明：
+preserve edges of an image, while still reducing noise. 
+The largest downside to thismethod is that it is considerably slower than its averaging,
+Gaussian, and median blurring counterparts
+
+附录：
+图像平滑是指用于突出图像的宽大区域、低频成分、主干部分或抑制图像噪声和干扰高频成分的图像处理方法，
+目的是使图像亮度平缓渐变，减小突变梯度，改善图像质量。
