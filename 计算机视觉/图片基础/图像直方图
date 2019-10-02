@@ -1,0 +1,150 @@
+图像直方图
+直方图是对图像像素的统计分布，它统计了每个像素（0到L-1）的数量。
+直方图均衡化就是将原始的直方图拉伸，使之均匀分布在全部灰度范围内，从而增强图像的对比度。
+直方图均衡化的中心思想是把原始图像的的灰度直方图从比较集中的某个区域变成在全部灰度范围内的均匀分布。
+cv2.calcHist(images, channels, mask, histSize, ranges[, hist[, accumulate ]]) #返回hist
+第一个参数必须用方括号括起来。
+第二个参数是用于计算直方图的通道，这里使用灰度图计算直方图，所以就直接使用第一个通道；
+第三个参数是Mask，这里没有使用，所以用None。
+第四个参数是histSize，表示这个直方图分成多少份（即多少个直方柱）。第二个例子将绘出直方图，到时候会清楚一点。
+第五个参数是表示直方图中各个像素的值，[0.0, 256.0]表示直方图能表示像素值从0.0到256的像素。
+最后是两个可选参数，由于直方图作为函数结果返回了，所以第六个hist就没有意义了（待确定） 最后一个accumulate是一个布尔值，用来表示直方图是否叠加。
+要理解直方图，绕不开“亮度”这个概念。人们把照片的亮度分为0到255共256个数值，数值越大，代表的亮度越高。其中0代表纯黑色的最暗区域，255表示最亮的纯白色，而中间的数字就是不同亮度的灰色。人们还进一步把这些亮度分为了5个区域，分别是黑色，阴影，中间调，高光和白色。
+直方图中柱子的高度，代表了画面中有多少像素是那个亮度，其实就可以看出来画面中亮度的分布和比例.
+
+1. 灰度直方图
+import matplotlib
+matplotlib.use('TKAgg')
+
+from matplotlib import pyplot as plt
+import argparse
+import cv2
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image",
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imshow("Original", image)
+
+hist = cv2.calcHist([image], [0], None, [256], [0, 256])
+plt.figure()
+plt.title("Grayscale Histogram")
+plt.xlabel("Bins")
+plt.ylabel("# of Pixels")
+plt.plot(hist)
+plt.xlim([0, 256])
+plt.show()
+cv2.waitKey(0)
+
+2. 颜色直方图
+import matplotlib
+matplotlib.use('TKAgg')
+
+from matplotlib import pyplot as plt
+import argparse
+import cv2
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image",
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+chans = cv2.split(image)
+colors = ("b", "g", "r")
+plt.figure()
+plt.title("Flattended color histogram")
+plt.xlabel("Bins")
+plt.ylabel("# of Pixels")
+
+for (chan, color) in zip(chans, colors):
+    hist = cv2.calcHist([chan], [0], None, [256], [0, 256])
+    plt.plot(hist, color=color)
+    plt.xlim([0, 256])
+plt.show()
+cv2.waitKey(0)
+
+
+fig = plt.figure()
+ax = fig.add_subplot(131)
+hist = cv2.calcHist([chans[1], chans[0]], [0,1], None,[32, 32], 
+        [0, 256, 0, 256])
+p = ax.imshow(hist, interpolation="nearest")
+ax.set_title("2D Color Histogram for G and B")
+plt.colorbar(p)
+
+ax = fig.add_subplot(132)
+hist = cv2.calcHist([chans[1], chans[2]], [0, 1], None,
+    [32, 32], [0, 256, 0, 256])
+p = ax.imshow(hist, interpolation="nearest")
+ax.set_title("2D Color histogram for G and R")
+plt.colorbar(p)
+
+ax = fig.add_subplot(133)
+hist = cv2.calcHist([chans[0], chans[2]], [0, 1], None,
+    [32, 32], [0, 256, 0, 256])
+p = ax.imshow(hist, interpolation="nearest")
+ax.set_title("2D color histogram for B and R")
+plt.colorbar(p)
+
+print("2D histogram shape:{}, with {} values".format(
+    hist.shape, hist.flatten().shape[0]))
+
+cv2.waitKey(0)
+
+hist = cv2.calcHist([image], [0, 1, 2],
+    None, [8, 8, 8], [0, 256, 0, 256, 0, 256])
+print("3D histogram shape:{}, with {} values".format(
+    hist.shape, hist.flatten().shape[0]))
+plt.show()
+
+3.直方图掩码化
+import matplotlib
+matplotlib.use('TKAgg')
+from matplotlib import pyplot as plt
+import numpy as np
+import argparse
+import cv2
+
+def plot_histogram(image, title, mask=None):
+    chans = cv2.split(image)
+    colors = ("b", "g", "r")
+    plt.figure()
+    plt.title(title)
+    plt.xlabel("Bins")
+    plt.ylabel("# of Pixels")
+
+    for (chan, color) in zip(chans, colors):
+        hist = cv2.calcHist([chan], [0], mask, [256], [0, 256])
+        plt.plot(hist, color=color)
+        plt.xlim([0, 256])
+    plt.show()
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+        help="Path to the image")
+args = vars(ap.parse_args())
+
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+plot_histogram(image, "Histogram for Original Image")
+cv2.waitKey(0)
+
+mask = np.zeros(image.shape[:2], dtype="uint8")
+cv2.rectangle(mask, (100, 100), (130, 100), 255, -1)
+cv2.imshow("Mask", mask)
+
+masked = cv2.bitwise_and(image,  image, mask=mask)
+cv2.imshow("Apply the mask", masked)
+
+plot_histogram(image, "Histogram for masked image", mask=mask)
+
+cv2.waitKey(0)
+
+更多：
+https://www.jianshu.com/p/bd12c4273d7d
