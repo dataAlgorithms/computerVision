@@ -1,0 +1,37 @@
+import numpy as np
+import argparse
+import cv2
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True,
+        help="Path to the image")
+args = vars(ap.parse_args())
+image = cv2.imread(args["image"])
+cv2.imshow("Original", image)
+
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+cv2.imshow("Gray", gray)
+
+hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+cv2.imshow("HSV", hsv)
+
+lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+cv2.imshow("Lab", lab)
+cv2.waitKey(0)
+
+附加：
+RGB颜色空间   
+  计算机色彩显示器显示色彩的原理与彩色电视机一样，都是采用R、G、B相加混色的原理，通过发射出三种不同强度的电子束，
+  使屏幕内侧覆盖的红、绿、蓝磷光材料发光而产生色彩的。这种色彩的表示方法称为RGB色彩空间表示。在多媒体计算机技术中，
+  用的最多的是RGB色彩空间表示。
+  根据三基色原理，用基色光单位来表示光的量，则在RGB色彩空间，任意色光F都可以用R、G、B三色不同分量的相加混合而成：
+  F＝r [ R ] + g [ G ] + b [ B ]
+HSV颜色空间
+ HSV(hue,saturation,value)颜色空间的模型对应于圆柱坐标系中的一个圆锥形子集，圆锥的顶面对应于V=1。它包含RGB模型中的R=1，G=1，B=1三个面，
+ 所代表的颜色较亮。色彩H由绕V轴的旋转角给定。红色对应于角度0°，绿色对应于角度120°，蓝色对应于角度240°。在HSV颜色模型中，
+ 每一种颜色和它的补色相差180°。饱和度S取值从0到1，所以圆锥顶面的半径为１。HSV颜色模型所代表的颜色域是CIE色度图的一个子集，
+ 这个模型中饱和度为百分之百的颜色，其纯度一般小于百分之百。在圆锥的顶点(即原点)处，V=0,H和S无定义，代表黑色。
+ 圆锥的顶面中心处S=0，V=1,H无定义，代表白色。从该点到原点代表亮度渐暗的灰色，即具有不同灰度的灰色。对于这些点，
+ S=0,H的值无定义。可以说，HSV模型中的V轴对应于RGB颜色空间中的主对角线。在圆锥顶面的圆周上的颜色，V=1，S=1,这种颜色是纯色。
+ HSV模型对应于画家配色的方法。画家用改变色浓和色深的方法
+ 从某种纯色获得不同色调的颜色，在一种纯色中加入白色以改变色浓，加入黑色以改变色深，同时加入不同比例的白色，黑色即可获得各种不同的色调。
