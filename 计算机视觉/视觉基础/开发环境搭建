@@ -1,0 +1,28 @@
+一. cpu
+docker:
+https://github.com/NealXie/docker_tensorflow
+
+概要:
+docker pull dash00/tensorflow-python3-jupyter 
+docker run -it -p 8888:8888 -v /$(pwd)/notebooks:/notebooks dash00/tensorflow-python3-jupyter
+
+二. gpu
+https://zhuanlan.zhihu.com/p/64741420
+
+docker pull tensorflow/tensorflow:latest-gpu-py3 
+docker run -it --rm --runtime=nvidia  -p 8888:8888 -v /$(pwd)/notebooks:/notebooks tensorflow/tensorflow:latest-gpu-py3
+
+修改网络：
+from keras import backend as K
+K.tensorflow_backend._get_available_gpus()
+
+pip install opencv-contrib-python
+pip install imutils
+pip install keras
+apt install -y libsm6
+apt-get install -y libxrender1
+apt install -y libxext6
+pip3 install pillow
+
+
+
