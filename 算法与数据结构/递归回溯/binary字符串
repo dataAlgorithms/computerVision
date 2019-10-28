@@ -1,0 +1,78 @@
+https://stackoverflow.com/questions/16150641/how-can-i-generate-4-bit-binary-combination-using-recursion-in-c-for-0-1
+
+问题:
+Generate all the strings of n bits. 
+
+1. 递归法(全局)
+num  = 3
+code = [None] * num
+
+def genBinCode(str, n):
+    if n == 0:
+        print(str)
+    else:
+        str[num-n] = '0'
+        genBinCode(str,n-1)
+        str[num-n] = '1'
+        genBinCode(str, n-1)
+
+genBinCode(code, num)
+
+# 输出
+['0', '0', '0']
+['0', '0', '1']
+['0', '1', '0']
+['0', '1', '1']
+['1', '0', '0']
+['1', '0', '1']
+['1', '1', '0']
+['1', '1', '1'
+
+2.递归法(局部)
+# print the output
+def printTheArray(arr, n):
+    for i in range(0, n):
+        print(arr[i], end=" ")
+    print()
+
+# generate all binary strings
+def generateBinaryStrings(n, arr, i):
+    if i == n:
+        printTheArray(arr, n)
+        return
+
+    # first assign 0 at ith position
+    # and try for all other permutations
+    # for remaining positions
+    arr[i] = 0
+    generateBinaryStrings(n, arr, i+1)
+
+    # then assign 1 at ith position
+    # and try for all other permuations
+    # for remaining positions
+    arr[i] = 1
+    generateBinaryStrings(n, arr, i+1)
+
+if __name__ == '__main__':
+    n = 4
+    arr = [None] * n
+    generateBinaryStrings(n, arr, 0)
+
+# 输出
+root@deepface-19:/data/zhouping/anaconda3/pyLearn# python36 bs.py 
+0 0 0 0 
+0 0 0 1 
+0 0 1 0 
+0 0 1 1 
+0 1 0 0 
+0 1 0 1 
+0 1 1 0 
+0 1 1 1 
+1 0 0 0 
+1 0 0 1 
+1 0 1 0 
+1 0 1 1 
+1 1 0 0 
+1 1 0 1 
+1 1 1 0 
+1 1 1 1 
