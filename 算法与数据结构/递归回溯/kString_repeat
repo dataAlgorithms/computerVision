@@ -1,0 +1,60 @@
+# print all possible string of length k
+def printAllKLengthRec(aSet, prefix, n, k):
+    # base case, k is 0
+    if k == 0:
+        print(prefix)
+        return
+
+    # one by one add all characters 
+    # from set and recursively
+    # call for k  equals to k-1
+    for i in range(n):
+        # next character of input added
+        newPrefix = prefix + aSet[i]
+
+        # k is decreased, because
+        # we have added a new character
+        printAllKLengthRec(aSet, newPrefix, n, k-1)
+
+def printAllKLength(aSet, k, n):
+    printAllKLengthRec(aSet, "", n, k)
+
+def main():
+    aSet = ['a', 'b', 'c', 'd']
+    k = 3
+    printAllKLength(aSet, k, len(aSet))
+
+if __name__ == '__main__':
+    main()
+    
+# 输出
+aaa
+aab
+aac
+...
+
+
+附加：
+基于python实现类似功能
+import itertools
+Permutation (order matters):
+print list(itertools.permutations([1,2,3,4], 2))
+[(1, 2), (1, 3), (1, 4),
+(2, 1), (2, 3), (2, 4),
+(3, 1), (3, 2), (3, 4),
+(4, 1), (4, 2), (4, 3)]
+
+Combination (order does NOT matter):
+print list(itertools.combinations('123', 2))
+[('1', '2'), ('1', '3'), ('2', '3')]
+
+Cartesian product (with several iterables):
+print list(itertools.product([1,2,3], [4,5,6]))
+[(1, 4), (1, 5), (1, 6),
+(2, 4), (2, 5), (2, 6),
+(3, 4), (3, 5), (3, 6)]
+
+Cartesian product (with one iterable and itself):
+print list(itertools.product([1,2], repeat=3))
+[(1, 1, 1), (1, 1, 2), (1, 2, 1), (1, 2, 2),
+(2, 1, 1), (2, 1, 2), (2, 2, 1), (2, 2, 2)]
