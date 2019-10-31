@@ -3,3 +3,8 @@
 >>> b = np.array([2, 3, 4])
 >>> np.intersect1d(a,b)
 array([2, 3])
+
+In [2]: a = np.array([[1,2,],[3,4]])
+In [3]: b = np.array([[2,3],[5,6]])
+In [4]: np.intersect1d(a,b)
+Out[4]: array([2, 3])
