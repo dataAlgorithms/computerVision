@@ -1,0 +1,52 @@
+import heapq
+
+class PQ:
+    def __init__(self):
+        self._queue = []
+        self._index = 0
+    def push(self, item, priority):
+        heapq.heappush(self._queue, (-priority, self._index, item))
+        self._index += 1
+    def pop(self):
+        return heapq.heappop(self._queue)[-1]
+    def items(self):
+        return list(item for _, _, item in self._queue)
+
+class Item:
+    def __init__(self, name):
+        self.name = name
+    def __repr__(self):
+        return 'Item({!r})'.format(self.name)
+
+q = PQ()
+q.push(Item('foo'), 1)
+q.push(Item('bar'), 5)
+q.push(Item('spam'), 4)
+q.push(Item('grok'), 1)
+
+
+# 输出
+q = PQ()
+q.push(Item('foo'), 1)
+q.push(Item('bar'), 5)
+q.push(Item('spam'), 4)
+q.push(Item('grok'), 1)
+## -- End pasted text --
+
+In [53]: q
+Out[53]: <__main__.PQ at 0x14cea7a3b00>
+
+In [54]: q.items()
+Out[54]: [Item('bar'), Item('foo'), Item('spam'), Item('grok')]
+
+In [55]: q.pop()
+Out[55]: Item('bar')
+
+In [56]: q.pop()
+Out[56]: Item('spam')
+
+In [57]: q.pop()
+Out[57]: Item('foo')
+
+In [58]: q.pop()
+Out[58]: Item('grok')
