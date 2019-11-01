@@ -1,0 +1,32 @@
+In [7]: from collections import defaultdict
+In [8]: d = defaultdict(list)
+In [9]: d['a'].append(1)
+In [10]: d['a'].append(2)
+In [11]: d['a'].append(4)
+In [12]: d
+Out[12]: defaultdict(list, {'a': [1, 2, 4]})
+
+In [13]: d = defaultdict(set)
+In [14]: d['a'].add(2)
+In [15]: d['b'].add(4)
+In [16]: d
+Out[16]: defaultdict(set, {'a': {2}, 'b': {4}})
+
+In [17]: d = {}
+In [18]: d.setdefault("a", [])
+Out[18]: []
+In [19]: d
+Out[19]: {'a': []}
+In [20]: d['a'].append(1)
+In [21]: d
+Out[21]: {'a': [1]}
+
+In [22]: pairs = ((1, 2), (3, 4), (5, 6))
+In [24]: d = defaultdict(list)
+In [25]: d
+Out[25]: defaultdict(list, {})
+In [26]: for key, value in pairs:
+    ...:     d[key].append(value)
+    ...:
+In [27]: d
+Out[27]: defaultdict(list, {1: [2], 3: [4], 5: [6]})
