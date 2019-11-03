@@ -1,0 +1,13 @@
+In [6]: a, b = [1, 2]
+In [7]: a
+Out[7]: 1
+In [8]: b
+Out[8]: 2
+
+In [10]: first, *middle, second = [1, 2, 3, 4]
+In [11]: first
+Out[11]: 1
+In [12]: middle
+Out[12]: [2, 3]
+In [13]: second
+Out[13]: 4
