@@ -1,0 +1,33 @@
+In [15]: from collections import deque
+In [16]: q = deque(maxlen=3)
+In [17]: q.append(1)
+In [18]: q.append(2)
+In [19]: q.append(3)
+In [21]: q.append(4)
+In [22]: q
+Out[22]: deque([2, 3, 4])
+In [23]: q.append(5)
+In [24]: q
+Out[24]: deque([3, 4, 5])
+
+In [25]: q = deque()
+In [26]: q.append(1)
+In [27]: q.append(2)
+In [28]: q.append(3)
+In [29]: q
+Out[29]: deque([1, 2, 3])
+In [30]: q.append(4)
+In [31]: q
+Out[31]: deque([1, 2, 3, 4])
+In [32]: q.appendleft(5)
+
+In [33]: q
+Out[33]: deque([5, 1, 2, 3, 4])
+In [34]: q.pop()
+Out[34]: 4
+In [35]: q
+Out[35]: deque([5, 1, 2, 3])
+In [36]: q.popleft()
+Out[36]: 5
+In [37]: q
+Out[37]: deque([1, 2, 3])
