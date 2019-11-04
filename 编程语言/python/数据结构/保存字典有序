@@ -1,0 +1,28 @@
+In [1]: d = dict()
+In [2]: d['fea'] = 1
+In [3]: d['goo'] = 2
+In [4]: d['zoo'] = 3
+In [6]: d['hoo'] = 4
+In [7]: d
+Out[7]: {'fea': 1, 'goo': 2, 'hoo': 4, 'zoo': 3}
+
+In [8]: import json
+In [9]: json.dumps(d)
+Out[9]: '{"fea": 1, "goo": 2, "zoo": 3, "hoo": 4}'
+
+
+In [12]: from collections import OrderedDict
+In [18]: c = OrderedDict()
+In [19]: c['fea'] = 1
+In [20]: c['goo'] = 2
+In [21]: c['zoo'] = 3
+In [22]: c['hoo'] = 4
+In [23]: c
+Out[23]: OrderedDict([('fea', 1), ('goo', 2), ('zoo', 3), ('hoo', 4)])
+In [24]: json.dumps(c)
+Out[24]: '{"fea": 1, "goo": 2, "zoo": 3, "hoo": 4}'
+
+说明：
+1.保存有序是说按添加元素的顺序
+2.json.dumps只是方便的看字典元素
+3.OrderedDict实质上是双重链表，所以如果csv超过10万行，需要先考虑内存是否够大。
