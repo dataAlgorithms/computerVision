@@ -10,6 +10,9 @@ Out[21]: {'y'}
 # 交集(item)
 In [22]: a.items() & b.items()
 Out[22]: {('x', 1)}
+# 或集
+In [34]: a.keys() | b.keys()
+Out[34]: {'w', 'x', 'y', 'z'}
 
 
 In [24]: c = {key:a[key] for key in a.keys() - {'x','y'}}
