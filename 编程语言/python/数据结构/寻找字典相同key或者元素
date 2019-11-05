@@ -1,0 +1,18 @@
+In [18]: a = {'x':1,'y':2,'z':3}
+In [19]: b = {'x':1,'z':2,'w':4}
+
+# 交集(key)
+In [20]: a.keys() & b.keys()
+Out[20]: {'x', 'z'}
+# 差集(key)
+In [21]: a.keys() - b.keys()
+Out[21]: {'y'}
+# 交集(item)
+In [22]: a.items() & b.items()
+Out[22]: {('x', 1)}
+
+
+In [24]: c = {key:a[key] for key in a.keys() - {'x','y'}}
+In [25]: c
+Out[25]: {'z': 3}
+                                                                    
