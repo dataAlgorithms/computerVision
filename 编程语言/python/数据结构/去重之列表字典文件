@@ -1,0 +1,36 @@
+root@ubuntu:/tmp# python3.4 dedupe.py 
+[1, 5, 2, 9, 10]
+[{'y': 2, 'x': 1}, {'y': 3, 'x': 1}, {'y': 4, 'x': 2}]
+[{'y': 2, 'x': 1}, {'y': 4, 'x': 2}]
+nihao
+fjdkfj
+ddddd
+fjdkfs
+11111
+root@ubuntu:/tmp# 
+root@ubuntu:/tmp# cat dedupe.py 
+def dedupe(items, key=None):
+    seen = set()
+    for item in items:
+        val = item if key is None else key(item)
+        if val not in seen:
+            yield item
+            seen.add(val)
+
+#列表去重
+a = [1, 5, 2, 1, 9, 1, 5, 10]
+print(list(dedupe(a)))
+
+#字典去重
+a = [ {'x':1, 'y':2}, {'x':1, 'y':3}, {'x':1, 'y':2}, {'x':2, 'y':4}]
+print(list(dedupe(a, key=lambda d: (d['x'],d['y']))))
+print(list(dedupe(a, key=lambda item: (item['x']))))
+
+#文件行去重
+with open('nihao.test') as nt:
+    newLines = dedupe(nt)
+    for line in newLines:
+        print(line, end='')
+
+with open('new.txt', 'w') as nw:
+    nw.write(str(newLines))
