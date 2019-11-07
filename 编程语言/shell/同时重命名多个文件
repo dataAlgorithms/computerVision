@@ -1,0 +1,22 @@
+root@ubuntu:/home/vega# ls -l *.result*|awk  '{print $9}'
+faceLicense.result_trt_60_turing
+faceMonitor.result_trt_60_turing
+facePedestrian.result_trt_60_turing
+faceVehicle.result_trt_60_turing
+faceZhuapai.result_trt_60_turing
+root@ubuntu:/home/vega# ls -l *.result*|awk  '{print $9}'|awk -F "_" '{print $1}'
+faceLicense.result
+faceMonitor.result
+facePedestrian.result
+faceVehicle.result
+faceZhuapai.result
+root@ubuntu:/home/vega# ls -l *.result*|awk  '{print $9}'|awk -F "_" '{print $1}'
+faceLicense.result
+faceMonitor.result
+facePedestrian.result
+faceVehicle.result
+faceZhuapai.result
+root@ubuntu:/home/vega# for file in face*.result*
+> do
+>     mv -i "${file}" "${file/_*/}"
+> done
