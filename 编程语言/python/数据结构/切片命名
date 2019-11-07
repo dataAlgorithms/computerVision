@@ -1,0 +1,17 @@
+In [6]: items = [1, 2, 3, 4, 5]
+In [8]: a = slice(2,3)
+In [9]: items[a]
+Out[9]: [3]
+
+In [21]: s = 'HelloWorld'
+In [25]: a = slice(5, 10, 2)
+In [26]: a
+Out[26]: slice(5, 10, 2)
+
+In [27]: for i in range(*a.indices(len(s))):
+    ...:     print(s[i])
+    ...:
+W
+r
+d
+                            
