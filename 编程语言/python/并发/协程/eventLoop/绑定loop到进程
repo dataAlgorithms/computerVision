@@ -1,0 +1,112 @@
+方法一:
+只适合linux
+
+import asyncio
+import os
+
+pid_loops = {}
+
+def get_event_loop():
+    return pid_loops[os.getpid()]
+
+def asyncio_init():
+    pid  = os.getpid()
+    if pid not in pid_loops:
+        pid_loops[pid] = asyncio.new_event_loop()
+        pid_loops[pid].pid = pid
+
+if __name__ == '__main__':
+    os.register_at_fork(after_in_parent=asyncio_init, after_in_child=asyncio_init)
+    if os.fork() == 0:
+        # child
+        loop = get_event_loop()
+        pid = os.getpid()
+        assert pid == loop.pid
+        print(pid)
+    else:
+        # parent
+        loop = get_event_loop()
+        pid = os.getpid()
+        assert pid == loop.pid
+        print(pid)
+        
+ #输出
+ root@ubuntu:/home/zhouping/anaconda3/pyLearn/asyncio/recipe# python37 attachLoop2Process.py 
+112658
+112659
+
+方法二:
+通用方法
+
+import asyncio
+import os
+import random
+import typing
+from multiprocessing import Process
+
+processes = []
+
+def cleanup():
+    global processes
+    while processes:
+        proc = processes.pop()
+        try:
+            proc.join()
+        except KeyboardInterrupt:
+            proc.terminate()
+
+async def worker():
+    random_delay = random.randint(0, 3)
+    result = await asyncio.sleep(random_delay, result=f"Working in process: {os.getpid()}")
+    print(result)
+
+def process_main(coro_worker: typing.Callable, num_of_coroutines: int, ):
+    loop = asyncio.new_event_loop()
+    try:
+        workers = [coro_worker() for _ in range(num_of_coroutines)]
+        loop.run_until_complete(asyncio.gather(*workers, loop=loop))
+    except keyboardInterrupt:
+        print(f"Stopping {os.getpid()}")
+        loop.stop()
+    finally:
+        loop.close()
+
+def main(processes, num_procs, num_coros, process_main):
+    for _ in range(num_procs):
+        proc = Process(target=process_main, args=(worker, num_coros))
+        processes.append(proc)  
+        proc.start()
+
+if __name__ == '__main__':
+    try:
+        main(processes, 10, 2, process_main, )
+    except KeyboardInterrupt:
+        print("Ctrl+c was pressed, stopping all subprocess..")
+    finally:
+        cleanup()
+        print('cleanup finished')  
+        
+        
+#输出
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/asyncio/recipe# python37 attachLoop2Process2.py 
+Working in process: 111634
+Working in process: 111634
+Working in process: 111635
+Working in process: 111640
+Working in process: 111641
+Working in process: 111633
+Working in process: 111637
+Working in process: 111638
+Working in process: 111639
+Working in process: 111636
+Working in process: 111635
+Working in process: 111639
+Working in process: 111637
+Working in process: 111632
+Working in process: 111632
+Working in process: 111633
+Working in process: 111636
+Working in process: 111641
+Working in process: 111638
+Working in process: 111640
+cleanup finished
