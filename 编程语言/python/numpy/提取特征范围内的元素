@@ -1,0 +1,9 @@
+In [46]: a = np.array([2, 6, 1, 9, 10, 3, 27])
+In [49]: a[(a>=5) & (a<=10)]
+Out[49]: array([ 6,  9, 10])
+In [50]: index = np.where(np.logical_and(a>=5, a<=10))
+In [51]: a[index]
+Out[51]: array([ 6,  9, 10])
+In [52]: index = np.where((a>=5) & (a<=10))
+In [53]: a[index]
+Out[53]: array([ 6,  9, 10])
