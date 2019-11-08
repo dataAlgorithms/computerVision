@@ -1,0 +1,9 @@
+>>> import asyncio
+>>> import sys
+>>> loop = asyncio.new_event_loop()
+>>> print(loop)
+<_UnixSelectorEventLoop running=False closed=False debug=False>
+>>> asyncio.set_event_loop(loop)
+>>> if sys.platform != "win32":
+...     watcher = asyncio.get_child_watcher()
+...     watcher.attach_loop(loop)
