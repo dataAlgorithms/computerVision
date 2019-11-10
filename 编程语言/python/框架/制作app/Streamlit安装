@@ -1,0 +1,7 @@
+pip install streamlit
+
+安装FAQ
+1.ERROR: Cannot uninstall 'tornado'. 
+It is a distutils installed project we cannot accurately determine which files belong to it which would...
+解决办法：
+pip install --ignore-installed tornado
