@@ -1,3 +1,4 @@
+方法一：行号替换
 root@deepface-19:/tmp# lineno=`grep -n PermitRootLogin guli.txt |awk -F ":" '{print $1}'`
 root@deepface-19:/tmp# echo $lineno
 4
@@ -10,6 +11,24 @@ djfkdjfk
 fdjkfjdk
 root@deepface-19:/tmp# sed -i "$lineno s/.*/PermitRootLogin yes/" guli.txt   
 root@deepface-19:/tmp# cat guli.txt 
+fjdkfjkd
+fdjkfjdk
+fjdkfjdk
+PermitRootLogin yes
+djfkdjfk
+fdjkfjdk
+
+方法二：正则法
+root@deepface-19:/tmp# cat guli.txt 
+fjdkfjkd
+fdjkfjdk
+fjdkfjdk
+#PermitRootLogin yes
+djfkdjfk
+fdjkfjdk
+root@deepface-19:/tmp# 
+root@deepface-19:/tmp# 
+root@deepface-19:/tmp# sed -e "s/.*PermitRootLogin.*/PermitRootLogin yes/g" guli.txt 
 fjdkfjkd
 fdjkfjdk
 fjdkfjdk
