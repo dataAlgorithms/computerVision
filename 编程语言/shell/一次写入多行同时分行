@@ -1,0 +1,5 @@
+cat <<\EOT >target_file
+foo
+    bar
+        baz
+EOT
