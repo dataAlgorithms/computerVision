@@ -1,0 +1,18 @@
+root@deepface-19:/tmp# lineno=`grep -n PermitRootLogin guli.txt |awk -F ":" '{print $1}'`
+root@deepface-19:/tmp# echo $lineno
+4
+root@deepface-19:/tmp# sed "$lineno s/.*/PermitRootLogin yes/" guli.txt 
+fjdkfjkd
+fdjkfjdk
+fjdkfjdk
+PermitRootLogin yes
+djfkdjfk
+fdjkfjdk
+root@deepface-19:/tmp# sed -i "$lineno s/.*/PermitRootLogin yes/" guli.txt   
+root@deepface-19:/tmp# cat guli.txt 
+fjdkfjkd
+fdjkfjdk
+fjdkfjdk
+PermitRootLogin yes
+djfkdjfk
+fdjkfjdk
