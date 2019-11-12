@@ -1,0 +1,10 @@
+In [11]: from collections import namedtuple
+In [22]: Stock = namedtuple('Stock', ('name', 'shares', 'price'))
+In [23]: records = [('n1', 1, 2.1), ('n2', 2, 2), ('n3', 3, 4.3)]
+In [24]: for rec in records:
+    ...:     s = Stock(*rec)
+    ...:     print(s.name, s.shares, s.price)
+    ...:
+n1 1 2.1
+n2 2 2
+n3 3 4.3
