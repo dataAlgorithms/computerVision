@@ -1,0 +1,114 @@
+1.换算法
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class SLL:
+    def __init__(self):
+        self.head = None
+
+    def __len__(self):
+        count = 0
+        curNode = self.head
+        while curNode is not None:
+            count += 1
+            curNode = curNode.next
+        return count
+
+    def insert(self, data):
+        if self.head is None:
+            dNode = Node(data)
+            self.head = dNode
+        else:
+            dNode = Node(data)
+            dNode.next = self.head
+            self.head = dNode
+
+    def append(self, data):
+        if self.head is None:
+            dNode = Node(data)
+            self.head = dNode
+        else:
+            dNode = Node(data)
+            curNode = self.head
+            while curNode is not None:
+                preNode = curNode
+                curNode = curNode.next
+
+            preNode.next = dNode
+
+    def delete(self):
+        assert self.head is not None, "can not delete empty sll"
+        if len(self) == 1:
+            self.head = None
+        elif len(self) == 2:
+            self.head.next = None
+        else:
+            preNode = self.head
+            curNode = self.head
+            while curNode.next is not None:
+                preNode = curNode
+                curNode = curNode.next
+
+            preNode.next = None
+
+    def query(self):
+        print("\r\n#######")
+        curNode = self.head
+        while curNode is not None:
+            print(curNode.data),
+            curNode = curNode.next
+
+    def searchFromEnd(self, nfromend):
+        assert nfromend <= len(self), "out of index"
+        index = len(self) - nfromend
+        curNode = self.head
+        start_index = 0
+        while curNode is not None:
+            if start_index == index:
+                return curNode.data
+            start_index += 1
+            curNode = curNode.next
+
+if __name__ == '__main__':
+    sll = SLL()
+    print('vars:', vars(sll))
+    datas = ['a', 'b', 'c', 'd', 'e']
+    for data in datas:
+        sll.insert(data)
+    sll.query()
+
+    datas = [1, 2, 3, 4, 5]
+    for data in datas:
+        sll.append(data)
+    sll.query()
+
+    while len(sll) != 0:
+        sll.delete()
+        sll.query()
+
+        break
+
+    sll.query()
+    data = sll.searchFromEnd(2)
+    print("\r\n")
+    print(data)
+
+2. 双指针法
+    def searchFromEnd2(self, nfromend):
+        assert nfromend <= len(self), "out of index"
+        frontNode = self.head
+        backNode = self.head
+        index = 0
+        while frontNode is not None:
+            if index == nfromend:
+                break
+            frontNode = frontNode.next
+            index += 1
+
+        while frontNode.next is not None:
+            frontNode = frontNode.next
+            backNode = backNode.next
+
+        return backNode.data
