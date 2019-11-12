@@ -1,0 +1,19 @@
+In [2]: %paste
+prices = {
+'ACME': 45.23,
+'AAPL': 612.78,
+'IBM': 205.55,
+'HPQ': 37.20,
+'FB': 10.75
+}
+
+In [3]: prices
+Out[3]: {'AAPL': 612.78, 'ACME': 45.23, 'FB': 10.75, 'HPQ': 37.2, 'IBM': 205.55}
+In [5]: pAbove = {key:value for key, value in prices.items() if value >= 200}
+In [6]: pAbove
+Out[6]: {'AAPL': 612.78, 'IBM': 205.55}
+
+In [7]: tech_names = { 'AAPL', 'IBM', 'HPQ', 'MSFT' }
+In [8]: pKey = {key:value for key, value in prices.items() if key in tech_names}
+In [9]: pKey
+Out[9]: {'AAPL': 612.78, 'HPQ': 37.2, 'IBM': 205.55}
