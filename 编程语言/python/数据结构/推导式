@@ -1,0 +1,21 @@
+>>> nums = [1, 2, 3, 4, 5]
+>>> s = sum(x * x for x in nums)
+>>> s
+55
+>>> exit()
+root@ubuntu:~# dir
+abtest  ApD  archive.ics.uci.edu  centos7.2.img  Ch2  Ch4  Ch6  Ch8  core_pattern~  core_patterz~  ip_local_port_range~  prefix                test.sh
+ApC     ApE  binder               Ch1            Ch3  Ch5  Ch7  Ch9  core_pattery~  CPP3.zip       ip_local_port_rangz~  pureftpd-install.log  zabbix-agent-autoinstall.sh
+root@ubuntu:~# python
+Python 2.7.6 (default, Nov 23 2017, 15:49:48) 
+[GCC 4.8.4] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import os
+>>> filenames = os.listdir(".")
+>>> if any(name.endswith(".img") for name in filenames):
+...     print('python')
+... else:
+...     print('no py')
+... 
+python
+>>> 
