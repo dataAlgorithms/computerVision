@@ -1,0 +1,27 @@
+import cv2
+
+im = cv2.imread("car.jpg")
+im_copy = im.copy()
+
+imgInfo = "/home/zhouping/algoSdk/code/dgvehicle/dgvehicle0.7.1.2/testResult/images/702699138349241460234546646_0.jpg 0.999925 1 2326 499 467 428 0.999673 1 1587 522 427 367 0.999106 1 1485 244 302 243 0.998774 1 1915 170 282 220 0.996278 1 1578 843 561 521 0.991576 1 1442 1 187 128 0.990169 1 1813 69 237 204 0.988191 1 1085 101 206 177 0.98362 1 3136 64 172 144 0.92431 1 1500 130 228 169 0.918117 1 1187 0 166 98 0.917984 1 2731 2 214 142"
+imgSplit = imgInfo.split(" ")
+
+imgName = imgSplit[0]
+imgLeft = imgSplit[1:]
+
+objectNum = len(imgLeft) / 6
+print ('num:', objectNum)
+for index in range(int(objectNum)):
+    roi = imgLeft[index*6+2:(index+1)*6]
+    print ('roi:', roi)
+
+    x = eval(roi[0])
+    y = eval(roi[1])
+    x1 = eval(roi[0]) + eval(roi[2])
+    y1 = eval(roi[1]) + eval(roi[3])
+    cv2.rectangle(im_copy,(int(x),int(y)),(int(x1),int(y1)),(0,0,255),3) # color: B-G-R
+
+cv2.namedWindow('rectangle car', cv2.WINDOW_NORMAL)
+cv2.imshow("rectangle car", im_copy)
+
+cv2.waitKey(0)
