@@ -1,0 +1,154 @@
+方法1： 哈希法
+'''
+Use Hashing:
+Traverse the list one by one and keep putting the node addresses in a Hash Table. 
+At any point, if NULL is reached then return false and if next of current 
+node points to any of the previously stored nodes in Hash then return true.
+'''
+  
+# Node class 
+class Node:
+  
+    # Constructor to initialize
+    # the node object
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+  
+class LinkedList:
+  
+    # Function to initialize head
+    def __init__(self):
+        self.head = None
+  
+    # Function to insert a new
+    # node at the beginning
+    def push(self, new_data):
+        new_node = Node(new_data)
+        new_node.next = self.head
+        self.head = new_node
+  
+    # Utility function to prit
+    # the linked LinkedList
+    def printList(self):
+        temp = self.head
+        while(temp):
+            print (temp.data,end=" ")
+            temp = temp.next
+  
+  
+    def detectLoop(self):
+         s = set()
+         temp=self.head
+         while (temp):
+         
+             # If we have already has
+             # this node in hashmap it
+             # means their is a cycle
+             # (Because you we encountering
+             # the node second time).
+            if (temp in s):
+                return True
+    
+            # If we are seeing the node for
+            # the first time, insert it in hash
+            s.add(temp)
+    
+            temp = temp.next
+         
+    
+         return False
+  
+# Driver program for testing
+llist = LinkedList()
+llist.push(20)
+llist.push(4)
+llist.push(15)
+llist.push(10)
+  
+# Create a loop for testing
+llist.head.next.next.next.next = llist.head;
+ 
+if( llist.detectLoop()):
+    print ("Loop found")
+else :
+    print ("No Loop ")
+ 
+# This code is contributed by Gitanjali.
+
+法2： 快慢指针
+'''
+Mark Visited Nodes:
+This solution requires modifications to basic linked list data structure.  Have a visited flag with each node. 
+ Traverse the linked list and keep marking visited nodes.  If you see a visited node again then there is a loop.
+  This solution works in O(n) but requires additional information with each node.
+A variation of this solution that doesn’t require modification to basic data structure can be implemented using hash.  
+Just store the addresses of visited nodes in a hash and if you see an address that already exists in hash 
+then there is a loop.
+
+Floyd’s Cycle-Finding Algorithm:
+This is the fastest method. Traverse linked list using two pointers.  Move one pointer by one and other pointer by two. 
+ If these pointers meet at same node then there is a loop.  If pointers do not meet then linked list doesn’t have loop.
+
+Implementation of Floyd’s Cycle-Finding Algorithm:
+'''
+
+# Python program to detect loop in the linked list
+ 
+# Node class 
+class Node:
+ 
+    # Constructor to initialize the node object
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+ 
+class LinkedList:
+ 
+    # Function to initialize head
+    def __init__(self):
+        self.head = None
+ 
+    # Function to insert a new node at the beginning
+    def push(self, new_data):
+        new_node = Node(new_data)
+        new_node.next = self.head
+        self.head = new_node
+ 
+    # Utility function to prit the linked LinkedList
+    def printList(self):
+        temp = self.head
+        while(temp):
+            print temp.data,
+            temp = temp.next
+ 
+ 
+    def detectLoop(self):
+        slow_p = self.head
+        fast_p = self.head
+        while(slow_p and fast_p and fast_p.next):
+            slow_p = slow_p.next
+            fast_p = fast_p.next.next
+            if slow_p == fast_p:
+                print "Found Loop"
+                return
+ 
+# Driver program for testing
+llist = LinkedList()
+llist.push(20)
+llist.push(4)
+llist.push(15)
+llist.push(10)
+ 
+# Create a loop for testing
+llist.head.next.next.next.next = llist.head
+llist.detectLoop()
+ 
+
+Output:
+Found loop
+Time Complexity: O(n)
+Auxiliary Space: O(1)
+
+参考：
+https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/
