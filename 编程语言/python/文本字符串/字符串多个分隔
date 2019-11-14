@@ -1,0 +1,7 @@
+>>> import re
+>>> line = 'asdf fjdk; afed, fjek,asdf, foo'
+>>> re.split("[;,\s]\s*", line) 
+['asdf', 'fjdk', 'afed', 'fjek', 'asdf', 'foo']
+>>> 
+>>> re.split("(?:;|,|\s)\s*", line)
+['asdf', 'fjdk', 'afed', 'fjek', 'asdf', 'foo']
