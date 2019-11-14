@@ -1,0 +1,1 @@
+bash cmd.py  2>&1 | tee mylog.log &
