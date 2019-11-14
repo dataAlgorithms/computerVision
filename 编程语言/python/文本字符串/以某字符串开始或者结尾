@@ -1,0 +1,24 @@
+>>> url1 = 'http://wwww.spam.com'        
+>>> url2 = 'https://wwww.g.com'   
+>>> url1.startswith("http")
+True
+>>> url1.startswith(("http", "https")) 
+True
+>>> url2.startswith(("http", "https")) 
+True
+>>> 
+>>> 
+>>> url1.endswith("com")
+True
+>>> url1.endswith(("com", "txt"))
+True
+>>> 
+>>> import re
+>>> re.match("^http|^https", url1)
+<_sre.SRE_Match object at 0x7f17ddc0d510>
+>>> re.match("^http|^https", url2)
+<_sre.SRE_Match object at 0x7f17ddc0d578>
+>>> 
+>>> names = ['http://www.spam.com', 'https://www.g.com']
+>>> any(name.startswith(('http','https')) for name in names)
+True
