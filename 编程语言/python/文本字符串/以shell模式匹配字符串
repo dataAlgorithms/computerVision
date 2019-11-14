@@ -1,0 +1,7 @@
+>>> from fnmatch import fnmatch, fnmatchcase
+>>> fnmatch("*.txt", "foo.txt")
+False
+>>> fnmatch("foo.txt", "*.txt")
+True
+>>> fnmatch('Dat45.csv', 'Dat[0-9]*') 
+True
