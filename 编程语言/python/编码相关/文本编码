@@ -11,3 +11,45 @@ with codecs.open('country_codes.txt','r','utf-8') as infile:
 4.普通字符串编码
 字符串.encode('utf-8').decode('unicode_escape')
 
+5.拷贝编码
+export LANG="en_US.UTF-8"  
+PYTHONIOENCODING=utf-8 python getTransformMul.py results.csv 
+
+#############getTransformMul.py
+import csv
+import sys
+from collections import namedtuple
+import math
+import numpy as np
+import cv2
+import os
+import shutil
+import codecs
+import codecs
+sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+
+font = cv2.FONT_HERSHEY_SIMPLEX
+
+gScore = {}
+dScore = {}
+cName = sys.argv[1] # csv name
+
+dCheck = []
+def getPipeline(cName):
+
+    #with open(cName, encoding='utf-8') as f:
+    with codecs.open(cName,'r','utf-8') as f:
+        f_csv = csv.reader(f)
+        headers = next(f_csv)
+        Row = namedtuple('Row', headers)
+        for r in f_csv:
+            row = Row(*r)
+            path = row.path
+            name = row.name
+            src = name
+            dst = "transformPng/" + os.path.basename(path)
+            #shutil.copy(src, dst)
+            os.system("cp {} {}.png".format(src, dst))
+
+if __name__ == '__main__':
+    getPipeline(cName)
