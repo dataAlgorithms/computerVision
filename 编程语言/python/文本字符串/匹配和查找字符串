@@ -1,0 +1,39 @@
+>>> text = 'yeah, but no, but yeah, but no, but yeah'
+>>> text.find('no1')
+-1
+>>> text = 'Today is 11/27/2012. PyCon starts 3/13/2013.'
+>>> datepat = re.compile(r'\d+/\d+/\d+')
+>>> datepat.findall(text)
+['11/27/2012', '3/13/2013']
+
+>>> text1 = '11/27/2012'
+>>> text1 = '11/27/2012'
+>>> re.match(r'\d+/\d+/\d+', text1)
+<_sre.SRE_Match object at 0x7f0732e4b510>
+>>> datepat = re.compile(r'\d+/\d+/\d+')
+>>> datepat.match(text1)
+<_sre.SRE_Match object at 0x7f0732e4b578>
+>>> datepat = re.compile(r'\d+/\d+/\d+')
+>>> datepat.match(text1)                
+<_sre.SRE_Match object at 0x7f0732e4b510>
+>>> datepat.match(text) 
+>>> text
+'Today is 11/27/2012. PyCon starts 3/13/2013.'
+>>> 
+>>> datepat.findall(text)
+['11/27/2012', '3/13/2013']
+>>> datepat.finditer(text)
+<callable-iterator object at 0x7f0732e61350>
+>>> list(datepat.finditer(text))
+[<_sre.SRE_Match object at 0x7f0732e4b510>, <_sre.SRE_Match object at 0x7f0732e4b578>]
+>>> for i in datepat.finditer(text):
+...     print(i.group())            
+... 
+11/27/2012
+3/13/2013
+>>> for i in datapat.finditer(text):
+...     print(i.groups())
+... 
+('11', '27', '2012')
+('3', '13', '2013')
+>>> 
