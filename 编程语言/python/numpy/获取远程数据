@@ -1,0 +1,11 @@
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'   
+>>> iris = np.genfromtxt(url, delimiter=',', dtype='object')
+>>> np.set_printoptions(threshold=6)
+>>> iris
+array([[b'5.1', b'3.5', b'1.4', b'0.2', b'Iris-setosa'],
+       [b'4.9', b'3.0', b'1.4', b'0.2', b'Iris-setosa'],
+       [b'4.7', b'3.2', b'1.3', b'0.2', b'Iris-setosa'],
+       ...,
+       [b'6.5', b'3.0', b'5.2', b'2.0', b'Iris-virginica'],
+       [b'6.2', b'3.4', b'5.4', b'2.3', b'Iris-virginica'],
+       [b'5.9', b'3.0', b'5.1', b'1.8', b'Iris-virginica']], dtype=object)
