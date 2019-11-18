@@ -1,0 +1,8 @@
+In [16]: %paste
+text = '''/* this is a
+ multiline comment */'''
+comment = re.compile(r'/\*(.*?)\*/', flags=re.DOTALL)
+comment.findall(text)
+
+## -- End pasted text --
+Out[16]: [' this is a\n multiline comment ']
