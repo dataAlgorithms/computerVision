@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+#!coding=utf-8
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class SLL:
+    def __init__(self):
+        self.head = None
+
+    def sortInsert(self, data):
+        if self.head is None:
+            dNode = Node(data)
+            self.head = dNode
+        elif data < self.head.data:
+            dNode = Node(data)
+            dNode.next = self.head
+            self.head = dNode
+        else:
+            curNode = self.head
+            dNode = Node(data)
+            while curNode.next is not None and curNode.next.data < data:
+                curNode = curNode.next
+            dNode.next = curNode.next
+            curNode.next = dNode
+
+    def printList(self):
+        curNode = self.head
+        while curNode is not None:
+            data = curNode.data
+            print(data),
+            curNode = curNode.next
+        print("\r\n")
+
+if __name__ == '__main__':
+    sll = SLL()
+    sll.sortInsert(10)
+    sll.printList()
+    sll.sortInsert(5)
+    sll.printList()
+    sll.sortInsert(20)
+    sll.printList()
