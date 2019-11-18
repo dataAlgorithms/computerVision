@@ -1,0 +1,24 @@
+In [1]: text = 'UPPER PYTHON, lower python, Mixed Python'
+In [2]: import re
+In [3]: re.sub("python", "java", text)
+Out[3]: 'UPPER PYTHON, lower java, Mixed Python'
+In [5]: re.sub("python", "java", text, flags=re.IGNORECASE)
+Out[5]: 'UPPER java, lower java, Mixed java'
+
+In [11]: %paste
+def matchcase(word):
+    def replace(m):
+        text = m.group()
+        if text.isupper():
+            return word.upper()
+        elif text.islower():
+            return word.lower()
+        elif text[0].isupper():
+            return word.capitalize()
+        else:
+            return word
+
+    return replace
+
+In [12]: re.sub('python', matchcase('snake'), text, flags=re.IGNORECASE)
+Out[12]: 'UPPER SNAKE, lower snake, Mixed Snake'
