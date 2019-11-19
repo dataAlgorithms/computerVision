@@ -1,0 +1,156 @@
+方法一: 迭代法
+算法:
+1.Initialize three pointers prev as NULL, curr as head and next as NULL.
+2.Iterate trough the linked list. In loop, do following.
+// Before changing next of current,
+// store next node
+next = curr->next
+// Now change next of current
+// This is where actual reversing happens
+curr->next = prev
+// Move prev and curr one step forward
+prev = curr
+curr = next
+
+代码:
+# Time Complexity : O(n) 
+# Space Complexity : O(1) 
+import os
+
+class Node:
+
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def push(self, new_data):
+        new_node = Node(new_data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def printList(self):
+        temp = self.head
+        while temp:
+            print(temp.data),
+            temp = temp.next
+
+        print(os.linesep)
+
+    def reverse(self):
+        prev = None
+        current = self.head
+        while current is not None:
+            next = current.next
+            current.next = prev
+            prev =  current
+            current = next
+        self.head = prev
+
+def main():
+
+    llist = LinkedList()
+    llist.push(20)
+    llist.push(4)
+    llist.push(15)
+    llist.push(85)
+
+    llist.printList()
+    llist.reverse()
+    llist.printList()
+
+if __name__ == '__main__':
+    main()
+
+# 输出
+85 15 4 20 
+20 4 15 85 
+
+方法二: 递归法
+算法:
+   1) Divide the list in two parts - first node and 
+      rest of the linked list.
+   2) Call reverse for the rest of the linked list.
+   3) Link rest to first.
+   4) Fix head pointer
+
+代码:
+import os
+
+class Node:
+
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def push(self, new_data):
+        new_node = Node(new_data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def printList(self):
+        temp = self.head
+        while temp:
+            print(temp.data),
+            temp = temp.next
+
+        print(os.linesep)
+
+    def reverse(self):
+        prev = None
+        current = self.head
+        while current is not None:
+            next = current.next
+            current.next = prev
+            prev =  current
+            current = next
+        self.head = prev
+
+    def reverseUtil(self, curr, prev):
+        # If last node mark it head
+        if curr.next is None:
+            self.head = curr
+
+            # update next to prev node
+            curr.next = prev
+            return
+
+        # save curr.next node for recursive call
+        next = curr.next
+
+        # and update next
+        curr.next = prev
+
+        self.reverseUtil(next, curr)
+
+    def reverseRec(self):
+        if self.head is None:
+            return
+        self.reverseUtil(self.head, None)
+        
+
+def main():
+
+    llist = LinkedList()
+    llist.push(20)
+    llist.push(4)
+    llist.push(15)
+    llist.push(85)
+
+    llist.printList()
+    llist.reverseRec()                                                                                                                                                     
+    llist.printList()    
+
+if __name__ == '__main__':
+    main()
+
+# 输出
+85 15 4 20 
+20 4 15 85 
