@@ -1,0 +1,71 @@
+In [1]: s1 = 'Spicy Jalape\u00f1o'
+
+In [2]: s2 = 'Spicy Jalapen\u0303o'
+
+In [3]: s1
+Out[3]: 'Spicy Jalapeño'
+
+In [4]: s2
+Out[4]: 'Spicy Jalapeño'
+
+In [5]: s1 == s2
+Out[5]: False
+
+In [6]: len(s1)
+Out[6]: 14
+
+In [7]: len(s2)
+Out[7]: 15
+
+In [8]: import unicodedata
+
+In [9]: t1 = unicodedata.normalize('NFC', s1)
+
+In [10]: t2 = unicodedata.normalize('NFC', s2)
+
+In [11]: t1
+Out[11]: 'Spicy Jalapeño'
+
+In [12]: t2
+Out[12]: 'Spicy Jalapeño'
+
+In [13]: t1 == t2
+Out[13]: True
+
+In [14]: ascii(t1)
+Out[14]: "'Spicy Jalape\\xf1o'"
+
+In [15]: ascii(t2)
+Out[15]: "'Spicy Jalape\\xf1o'"
+
+In [16]:
+
+In [16]: t3 = unicodedata.normalize('NFD', s1)
+
+In [17]: t4 = unicodedata.normalize('NFD', s2)
+
+In [18]: t3
+Out[18]: 'Spicy Jalapeño'
+
+In [19]: t4
+Out[19]: 'Spicy Jalapeño'
+
+In [20]: t3 == t4
+Out[20]: True
+
+In [21]: ascii(t3)
+Out[21]: "'Spicy Jalapen\\u0303o'"
+
+In [23]: unicodedata.normalize('NFKD', t1)
+Out[23]: 'Spicy Jalapeño'
+
+In [24]: unicodedata.normalize('NFKD', t1)
+Out[24]: 'Spicy Jalapeño'
+
+In [25]: unicodedata.normalize('NFKC', t1)
+Out[25]: 'Spicy Jalapeño'
+
+In [28]: t1 = unicodedata.normalize('NFD', s1)
+
+In [29]: ''.join(c for c in t1 if not unicodedata.combining(c))
+Out[29]: 'Spicy Jalapeno'
