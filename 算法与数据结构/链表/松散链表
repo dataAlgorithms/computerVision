@@ -193,3 +193,5 @@ class UnrolledLinkedList():
             self.tail.arr.append(data)
 
         self.length = self.length + 1
+
+#https://www.geeksforgeeks.org/unrolled-linked-list-set-1-introduction/
