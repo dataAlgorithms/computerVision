@@ -1,0 +1,26 @@
+In [30]: import re
+
+In [31]: num = re.compile('\d+')
+
+In [32]: num.match('123')
+Out[32]: <_sre.SRE_Match object; span=(0, 3), match='123'>
+
+In [33]: num.match('\u0661\u0662\u0663')
+Out[33]: <_sre.SRE_Match object; span=(0, 3), match='١٢٣'>
+
+In [34]: arabic = re.compile('[\u0600-\u06ff\u0750-\u077f\u08a0-\u08ff]+')
+
+In [35]: arabic
+Out[35]: re.compile(r'[\u0600-ۿݐ-ݿࢠ-ࣿ]+', re.UNICODE)
+
+In [36]: pat = re.compile('stra\u00dfe', re.IGNORECASE)
+
+In [37]: s = 'straße'
+
+In [38]: pat.match(s)
+Out[38]: <_sre.SRE_Match object; span=(0, 6), match='straße'>
+
+In [39]: pat.match(s.upper())
+
+In [40]: s.upper()
+Out[40]: 'STRASSE'
