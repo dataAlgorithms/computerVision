@@ -1,0 +1,29 @@
+1.函数法(单个)
+>>> import re
+>>> s = ' hello world \n'
+>>> s.strip()
+'hello world'
+>>> s.lstrip()
+'hello world \n'
+>>> s.rstrip()
+' hello world'
+>>> s = ' hello world \r\n'
+>>> s.rstrip()             
+' hello world'
+>>> s.strip()              
+'hello world'
+>>> t = '-----hello====='
+>>> t.strip("-")
+'hello====='
+>>> t.strip("=")
+'-----hello'
+
+2.正则法(多个)
+>>> re.sub("\s+", " ", s.strip())
+'hello world'
+>>> 
+>>> re.sub(r"(^-+|=+$)", "", t)
+'hello'
+>>> t
+'-----hello====='
+>>> 
