@@ -28,7 +28,6 @@
 '-----hello====='
 >>> 
 
-
 应用:
 遍历文件
 with open(filename) as f:
