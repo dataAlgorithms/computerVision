@@ -1,0 +1,44 @@
+>>> import numpy as np
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+  File "<stdin>", line 1
+    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
+                                                                                   ^
+SyntaxError: EOL while scanning string literal
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+>>> sepallength = np.genfromtxt(url, delimiter=',', dtype='float', usecols=[0])
+>>> np.percentile(sepallength, q=[5, 95])
+array([4.6  , 7.255])
+>>> 
+
+
+附录:
+np.percentile(a,?q,?axis=None,?out=None,?overwrite_input=False,?interpolation='linear',?keepdims=False)
+作用：找到一组数的分位数值，如四分位数等(具体什么位置根据自己定义)
+
+函数参数说明：
+
+np.percentile(a,?q,?axis=None,?out=None,?overwrite_input=False,?interpolation='linear',?keepdims=False)
+ 
+a : array，用来算分位数的对象，可以是多维的数组
+q : 介于0-100的float，用来计算是几分位的参数，如四分之一位就是25，如要算两个位置的数就(25,75)
+axis : 坐标轴的方向，一维的就不用考虑了，多维的就用这个调整计算的维度方向，取值范围0/1
+out : 输出数据的存放对象，参数要与预期输出有相同的形状和缓冲区长度
+overwrite_input : bool，默认False，为True时及计算直接在数组内存计算，计算后原数组无法保存
+interpolation : 取值范围{'linear', 'lower', 'higher', 'midpoint', 'nearest'}
+            默认liner，比如取中位数，但是中位数有两个数字6和7，选不同参数来调整输出
+keepdims : bool,默认False,为真时取中位数的那个轴将保留在结果中
+
+
+>>>a = np.array([[10, 7, 4], [3, 2, 1]])
+>>>a
+array([[10,  7,  4],
+       [ 3,  2,  1]])
+>>>np.percentile(a, 50)
+3.5
+>>>np.percentile(a, 50, axis=0)
+array([[ 6.5,  4.5,  2.5]])
+>>>np.percentile(a, 50, axis=1)
+array([ 7.,  2.])
+>>>np.percentile(a, 50, axis=1, keepdims=True)
+array([[ 7.],
+       [ 2.]])
