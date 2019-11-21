@@ -1,0 +1,55 @@
+1.just法
+>>> import numpy as np
+>>> text = 'Hello world'
+>>> text.ljust(20)
+'Hello world         '
+>>> text.rjust(20)
+'         Hello world'
+>>> text.center(20)
+'    Hello world     '
+>>> 
+>>> 
+>>> text.ljust(20, '#')
+'Hello world#########'
+>>> text.rjust(20, '#') 
+'#########Hello world'
+>>> 
+>>> 
+>>> text.center(20, '#')     
+'####Hello world#####'
+>>> 
+
+2. format法
+>>> format(text, '20s')
+'Hello world         '
+>>> format(text, '>20s')
+'         Hello world'
+>>> format(text, '<20s')
+'Hello world         '
+>>> format(text, '^20s')
+'    Hello world     '
+>>> format(text, '*^20s')
+'****Hello world*****'
+>>> x = 1.2345
+>>> format(x, '>10') 
+'    1.2345'
+>>> 
+>>> format(x, '>10.2')
+'       1.2'
+>>> format(x, '>10.2f')
+'      1.23'
+>>> '{:20s} {:20s}'.format(x, x)
+>>> '{:20s} {:20s}'.format(text, text) 
+'Hello world          Hello world         '
+>>> '{:*20s} {:*20s}'.format(text, text)
+>>> '{:*^20s} {:*^20s}'.format(text, text)
+'****Hello world***** ****Hello world*****'
+>>> '{:*>20s} {:*>20s}'.format(text, text)   
+'*********Hello world *********Hello world'
+>>> '{:*>20s} {:*>20s}'.format(text, text)
+
+3.%法
+>>> '%-20s' % text
+'Hello world         '
+>>> '%20s' % text 
+'         Hello world'
