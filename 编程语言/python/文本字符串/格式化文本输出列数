@@ -1,0 +1,37 @@
+In [40]: s
+Out[40]: "Look into my eyes, look into my eyes, the eyes, the eyes, the eyes, not around the eyes, don't look around the eyes, look into my eyes, you're under."
+
+In [41]: import textwrap
+
+In [42]: textwrap.fill(s, 70)
+Out[42]: "Look into my eyes, look into my eyes, the eyes, the eyes, the eyes,\nnot around the eyes, don't look around the eyes, look into my eyes,\nyou're under."
+
+In [43]: print(textwrap.fill(s, 70))
+Look into my eyes, look into my eyes, the eyes, the eyes, the eyes,
+not around the eyes, don't look around the eyes, look into my eyes,
+you're under.
+
+In [44]: print(textwrap.fill(s, 40))
+Look into my eyes, look into my eyes,
+the eyes, the eyes, the eyes, not around
+the eyes, don't look around the eyes,
+look into my eyes, you're under.
+
+In [45]: print(textwrap.fill(s, 40, initial_indent=' '))
+ Look into my eyes, look into my eyes,
+the eyes, the eyes, the eyes, not around
+the eyes, don't look around the eyes,
+look into my eyes, you're under.
+
+In [46]: print(textwrap.fill(s, 40, subsequent_indent=' '))
+Look into my eyes, look into my eyes,
+ the eyes, the eyes, the eyes, not
+ around the eyes, don't look around the
+ eyes, look into my eyes, you're under.
+
+In [47]: import os
+
+In [48]: os.get_terminal_size().columns
+Out[48]: 84
+
+In [49]:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
