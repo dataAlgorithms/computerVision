@@ -1,0 +1,51 @@
+1.直接指定format法
+In [1]: s = '{name} has {n} messages.'
+In [2]: s.format(name='Guido', n=37)
+Out[2]: 'Guido has 37 messages.'
+
+2.使用vars的format_map法
+In [5]: name = 'Guido'
+In [6]: n = 37
+In [8]: s.format_map(vars())
+Out[8]: 'Guido has 37 messages.'
+
+3.使用vars的format_map法(支持class)
+In [9]: class Info:
+   ...:     def __init__(self, name, n):
+   ...:         self.name = name
+   ...:         self.n = n
+   ...:
+
+In [10]: a = Info('Guido', 37)
+In [11]: s.format_map(vars(a))
+Out[11]: 'Guido has 37 messages.'
+
+4. 安全format
+In [25]: class safesub(dict):
+    ...:     def __missing__(self, key):
+    ...:         return '{' + key + '}'
+    ...:
+In [20]: import sys
+
+In [21]: def sub(text):
+    ...:     return text.format_map(safesub(sys._getframe(1).f_locals))
+    ...:
+
+In [22]: name = 'Guido'
+
+In [23]: n = 37
+
+In [26]: print(sub('Hello {name}'))
+Hello Guido
+
+In [27]: print(sub('You have {n} messages.'))
+You have 37 messages.
+
+In [28]: print(sub('Your favorite color is {color}'))
+Your favorite color is {color}
+
+5.string模板法
+In [34]: import string
+In [35]: s = string.Template('$name has $n messages.')
+In [36]: s.substitute(vars())
+Out[36]: 'Guido has 37 messages.'
