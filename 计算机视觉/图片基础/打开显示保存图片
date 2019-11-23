@@ -48,6 +48,7 @@ while True:
         break
 
 方法二： matplotlib
+1.use r,g,b order(matplotlib default)
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
@@ -56,6 +57,23 @@ img = cv2.imread('messi.jpg', 0)
 plt.imshow(img, cmap='gray', interpolation='bicubic')
 plt.xticks([]), plt.yticks([]) # hide tick values on x and y axis
 plt.show()
+
+2.use b,g,r order(opencv default, keep the primary picture order)
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+img = cv2.imread('messi4.jpg')
+b,g,r = cv2.split(img)
+img2 = cv2.merge([r,g,b])
+plt.subplot(121);plt.imshow(img) # expects distorted color
+plt.subplot(122);plt.imshow(img2) # expect true color
+plt.show()
+
+cv2.imshow('bgr image',img) # expects true color
+cv2.imshow('rgb image',img2) # expects distorted color
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 方法三: pillow
 from PIL import Image
