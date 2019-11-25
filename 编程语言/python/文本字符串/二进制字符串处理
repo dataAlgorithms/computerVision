@@ -1,0 +1,56 @@
+In [1]: data = b'Hello World'
+
+In [2]: data[0:5]
+Out[2]: b'Hello'
+
+In [3]: data.startswith(b'Hello')
+Out[3]: True
+
+In [4]: data.replace(b'Hello', b'Hello Cruel')
+Out[4]: b'Hello Cruel World'
+
+In [6]: data = bytearray(b'Hello World')
+
+In [7]: data[0:5]
+Out[7]: b'Hello'
+
+In [8]: data.startswith(b'Hello')
+Out[8]: True
+
+In [9]: data.replace(b'Hello', b'Hello Cruel')
+Out[9]: b'Hello Cruel World'
+
+In [10]: data = b'Foo:BAR,SPAM'
+
+In [11]: import re
+
+In [13]: re.split(b'[:,]', data)
+Out[13]: [b'Foo', b'BAR', b'SPAM']
+
+In [14]: s = b'Hello World'
+
+In [15]: print(s)
+b'Hello World'
+
+In [16]: s.decode('ascii')
+Out[16]: 'Hello World'
+
+In [17]: '{:10s} {:10d} {:10.2f}'.format('ACME', 100, 490.1).encode('ascii')
+Out[17]: b'ACME              100     490.10'
+
+In [18]: with open('jalape\xf1o.txt', 'w') as f:
+    ...:     f.write('spicy')
+    ...:
+
+
+In [20]: import os
+
+In [21]: os.listdir('.')
+Out[21]:
+ 'jalape?o.txt',
+
+In [22]: os.listdir(b'.')
+Out[22]:
+
+ b'jalape\xc3\xb1o.txt',
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
