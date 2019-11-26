@@ -1,0 +1,25 @@
+In [1]: round(1.23, 1)
+Out[1]: 1.2
+
+In [2]: round(-1.27, 1)
+Out[2]: -1.3
+
+In [3]: round(1.25361, 3)
+Out[3]: 1.254
+
+In [5]: a = 1627731
+
+In [6]: round(a, -1)
+Out[6]: 1627730
+
+In [7]: round(a, -2)
+Out[7]: 1627700
+
+In [9]: format(a, '0.2f')
+Out[9]: '1627731.00'
+
+In [10]: format(a, '0.3f')
+Out[10]: '1627731.000'
+
+In [13]: 'value is {:0.3f}'.format(a)
+Out[13]: 'value is 1627731.000'
