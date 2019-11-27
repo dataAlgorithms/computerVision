@@ -1,0 +1,6 @@
+def getMost(arr):
+
+    import numpy as np
+    arr=np.array(arr)
+    tu=sorted([(np.sum(arr==i),i) for i in set(arr.flat)])
+    print(tu)
