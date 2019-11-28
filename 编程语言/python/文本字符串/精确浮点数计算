@@ -1,0 +1,21 @@
+>>> from decimal import Decimal
+>>> a = Decimal('4.2')
+>>> b = Decimal('2.1')
+>>> a + b
+Decimal('6.3')
+>>> float(a + b)
+6.3
+>>> with localcontext() as ctx:
+...     ctx.prec = 3
+...     print(a / b)
+... 
+>>> from decimal import localcontext
+>>> with localcontext() as ctx:     
+...     ctx.prec = 3                
+...     print(a / b)                
+... 
+2
+>>> nums = [1.23e+18, 1, -1.23e+18]
+>>> import math
+>>> math.fsum(nums)
+1.0
