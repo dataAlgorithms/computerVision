@@ -34,3 +34,4 @@ for (lower, upper) in boundaries:
 	cv2.imshow("images", np.hstack([image, output]))
 	cv2.waitKey(0)
 	
+#https://www.pyimagesearch.com/2014/08/04/opencv-python-color-detection/
