@@ -1,0 +1,29 @@
+>>> import re
+>>> a = '                         conv1_conv0 + conv1_relu0 input reformatter 0          0.2%            1         0.02'
+>>> re.split('\s{2,}', a)
+['', 'conv1_conv0 + conv1_relu0 input reformatter 0', '0.2%', '1', '0.02']
+>>> x = 1234.56789
+>>> format(x, '0.2f')
+'1234.57'
+>>> format(x, '>10.1f')
+'    1234.6'
+>>> format(x, '<10.1f')
+'1234.6    '
+>>> 
+>>> format(x, '^10.1f')
+'  1234.6  '
+>>> format(x, ',')
+'1,234.56789'
+>>> format(x, '0,.1f')
+'1,234.6'
+>>> format(x, 'e')
+'1.234568e+03'
+>>> format(x, '0.2E')
+'1.23E+03'
+>>> 'The value is {:0,.2f}'.format(x)
+'The value is 1,234.57'
+>>> format(x, '0.1f')
+'1234.6'
+>>> format(-x, '0.1f')
+'-1234.6'
+>>> 
