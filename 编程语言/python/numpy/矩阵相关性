@@ -1,0 +1,100 @@
+>>> import numpy as np
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+>>> iris = np.genfromtxt(url, delimiter=',', dtype='float', usecols=[0,1,2,3])
+>>> np.corrcoef(iris[:, 0], iris[:, 2])[0, 1]
+0.8717541573048718
+>>> 
+>>> from scipy.stats.stats import pearsonr  
+corr, p_value = pearsonr(iris[:, 0], iris[:, 2])
+print(corr)
+>>> corr, p_value = pearsonr(iris[:, 0], iris[:, 2])
+>>> print(corr)
+0.8717541573048712
+
+# Correlation coef indicates the degree of linear relationship between two numeric variables.
+# It can range between -1 to +1.
+
+# The p-value roughly indicates the probability of an uncorrelated system producing 
+# datasets that have a correlation at least as extreme as the one computed.
+# The lower the p-value (<0.01), stronger is the significance of the relationship.
+# It is not an indicator of the strength.
+#> 0.871754157305
+
+实例应用：股票相关性
+'''
+    协方差、相关矩阵、相关系数----评估两组样本相似度
+    协方差：通过两组统计数据计算而得到的协方差可以评估这两组统计数据的相似程度，值为正，则正相关,值为负，则负相关，绝对值越大则相关性越强
+    相关系数：协方差除以两组统计样本标准差之积，是一个[-1,1]之间的数，该结果称为两组统计样本的相关系数。
+            ---若相关系数越接近于1，表示两组样本正相关性越强；
+            ---若相关系数越接近于-1，表示两组样本负相关性越强；
+            ---若相关系数越接近于0，表示两组样本越不相关；
+    相关矩阵：相关系数矩阵，numpy提供了相关API，可以方便的获取两组数据的相关系数
+            ---np.corrcoef(A,B):可以计算两组样本的相关系数，但是返回的是2*2的矩阵
+'''
+import matplotlib.pyplot as mp
+import numpy as np
+import datetime as dt
+import matplotlib.dates as md
+
+
+# 日期转化函数
+def dmy2ymd(dmy):
+    # 把dmy格式的字符串转化成ymd格式的字符串
+    dmy = str(dmy, encoding='utf-8')
+    d = dt.datetime.strptime(dmy, '%d-%m-%Y')
+    d = d.date()
+    ymd = d.strftime('%Y-%m-%d')
+    return ymd
+
+
+dates, bhp_closing_prices = \
+    np.loadtxt('./da_data/bhp.csv', delimiter=',', usecols=(1, 6), unpack=True,
+               dtype='M8[D], f8', converters={1: dmy2ymd})  # converters为转换器，运行时先执行，其中1表示时间所在的列索引号
+
+vale_closing_prices = \
+    np.loadtxt('./da_data/vale.csv', delimiter=',', usecols=(6,), unpack=True,
+               dtype='f8')
+
+# 绘制收盘价折线图
+mp.figure('COV', facecolor='lightgray')
+mp.title('COV', fontsize=18)
+mp.xlabel('date', fontsize=12)
+mp.ylabel('Closing Price', fontsize=12)
+mp.tick_params(labelsize=10)
+mp.grid(linestyle=':')
+# 设置x轴的刻度定位器，使之更适合显示日期数据
+ax = mp.gca()
+# 以周一作为主刻度
+ma_loc = md.WeekdayLocator(byweekday=md.MO)
+# 次刻度，除周一外的日期
+mi_loc = md.DayLocator()
+ax.xaxis.set_major_locator(ma_loc)
+ax.xaxis.set_major_formatter(md.DateFormatter('%Y-%m-%d'))
+ax.xaxis.set_minor_locator(mi_loc)
+# 日期数据类型转换，更适合绘图
+dates = dates.astype(md.datetime.datetime)
+# 绘制两支股票的价格曲线
+mp.plot(dates, bhp_closing_prices, color='dodgerblue', label='BHP')
+mp.plot(dates, vale_closing_prices, color='orangered', label='VALE')
+# 通过计算协方差，输出两支股票的相似情况
+bhp_mean = np.mean(bhp_closing_prices)
+vale_mean = np.mean(vale_closing_prices)
+bhp_dev = bhp_closing_prices - bhp_mean
+vale_dev = vale_closing_prices - vale_mean
+cov_ab = np.mean(bhp_dev * vale_dev)
+print(cov_ab.round(2))
+# 输出两组样本的相关系数
+k = cov_ab / (np.std(bhp_closing_prices) * np.std(vale_closing_prices))
+print(k.round(4))
+# 输出相关矩阵
+m = np.corrcoef(bhp_closing_prices,vale_closing_prices)
+print(m.round(4))
+# 输出协方差阵
+covm = np.cov(bhp_closing_prices,vale_closing_prices)
+print(covm.round(2))
+
+mp.tight_layout()
+mp.legend()
+# 自动格式化x轴日期的显示格式（以最合适的方式显示）
+mp.gcf().autofmt_xdate()
+mp.show()
