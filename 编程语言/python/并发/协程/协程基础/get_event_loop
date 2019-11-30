@@ -1,0 +1,11 @@
+In [29]: async def f():
+    ...:     await asyncio.sleep(0)
+    ...:     return 111
+    ...:
+
+In [30]: loop = asyncio.get_event_loop()
+
+In [31]: coro = f()
+
+In [32]: loop.run_until_complete(coro)
+Out[32]: 111
