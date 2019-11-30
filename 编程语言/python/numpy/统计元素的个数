@@ -1,0 +1,9 @@
+>>> import numpy as np
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+>>> iris = np.genfromtxt(url, delimiter=',', dtype='object')
+>>> names = ('sepallength', 'sepalwidth', 'petallength', 'petalwidth', 'species')
+>>> species = np.array([row.tolist()[4] for row in iris])
+>>> np.unique(species, return_counts=True)
+(array([b'Iris-setosa', b'Iris-versicolor', b'Iris-virginica'],
+      dtype='|S15'), array([50, 50, 50]))
+>>> 
