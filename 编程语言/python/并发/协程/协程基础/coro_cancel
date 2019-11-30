@@ -1,0 +1,49 @@
+In [17]: import asyncio
+
+In [18]: async def f():
+    ...:     try:
+    ...:         while True:
+    ...:             await asyncio.sleep(0)
+    ...:     except asyncio.CancelledError:
+    ...:         print('I was cancelled!')
+    ...:     else:
+    ...:         return 111
+    ...:
+
+In [19]: coro = f()
+
+In [20]: coro.send(None)
+
+In [21]: coro.send(None)
+
+In [22]: coro.throw(asyncio.CancelledError)
+I was cancelled!
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+<ipython-input-22-cf992694026e> in <module>()
+----> 1 coro.throw(asyncio.CancelledError)
+
+StopIteration:
+
+In [23]: async def f():
+    ...:     try:
+    ...:         while True:
+    ...:             await asyncio.sleep(0)
+    ...:     except asyncio.CancelledError:
+    ...:         print('Nope!')
+    ...:         while True:
+    ...:             await asyncio.sleep(0)
+    ...:     else:
+    ...:         return 111
+    ...:
+
+In [24]:
+
+In [24]: coro = f()
+
+In [25]: coro.send(None)
+
+In [26]: coro.throw(asyncio.CancelledError)
+Nope!
+
+In [28]: coro.send(None)
