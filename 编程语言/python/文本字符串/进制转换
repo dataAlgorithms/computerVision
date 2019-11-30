@@ -1,0 +1,41 @@
+>>> x = 1234
+>>> bin(x)
+'0b10011010010'
+>>> oct(x)
+'0o2322'
+>>> hex(x)
+'0x4d2'
+>>> format(x, 'b')
+'10011010010'
+>>> format(x, 'o')
+'2322'
+>>> format(x, 'x')
+'4d2'
+>>> x = -1234
+>>> format(x, 'b')
+'-10011010010'
+>>> format(x, 'x')
+'-4d2'
+>>> format(2**32 + x, 'b')
+'11111111111111111111101100101110'
+>>> format(2**32 + x, 'x')
+'fffffb2e'
+>>> int('4d2', 16)
+1234
+>>> int('10011010010', 2)
+1234
+>>> os.listdir('.')
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'os' is not defined
+>>> import os
+>>> os.listdir('.')
+['.keras', '.ssh', 'ApD', 'Ch2', '.gitconfig', '.selected_editor', 'test.sh', 'Ch7', '.dbus', 
+'core_patterz~', 'Ch5', '.lesshst', '.rpmdb', '.node-gyp', 'centos7.2.img', '.profile', '.vimrc.bak', '.conan', '.npm', '.subversion', '.viminfo', '.iterm2', '.config', '.vimrc', '.install4j', '.toprc', 'zabbix-agent-autoinstall.sh', 'ApE', 'core_pattery~', '.cassandra', '.hasplm', '.vim', '.oracle_jre_usage', '.local', '.mysql_history', '.java', '.nv', 'binder', 'abtest', 'ApC', 'Ch4', '.gnuplot_history', 'ip_local_port_rangz~', 'prefix', 'Ch1', '.pip', 'CPP3.zip', '.gstreamer-0.10', '.python_history', '.cpan', '.bash_history', 'Ch6', 'Ch8', '.gnome2', 'ip_local_port_range~', '.iterm2_shell_integration.bash', '.bashrc', 'archive.ics.uci.edu', 'Ch9',
+'.wine', '.aptitude', 'pureftpd-install.log', 'Ch3', '.psql_history', '.cache', '.groovy', 'core_pattern~']
+>>> os.chmod(".profile", o0755)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+NameError: name 'o0755' is not defined
+>>> os.chmod(".profile", 0o755)
+>>> 
