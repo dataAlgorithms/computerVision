@@ -1,0 +1,11 @@
+In [1]: async def f():
+   ...:     return 123
+   ...:
+
+In [2]: type(f)
+Out[2]: function
+
+In [3]: import inspect
+
+In [4]: inspect.iscoroutinefunction(f)
+Out[4]: True
