@@ -1,0 +1,36 @@
+In [8]: async def f():
+   ...:     await asyncio.sleep(1.0)
+   ...:     return 123
+   ...:
+
+In [9]: async def main():
+   ...:     result = await f()
+   ...:     return result
+   ...:
+
+In [10]: coro = f()
+In [12]: import asyncio
+In [14]: coro = f()
+
+In [15]: coro.send(None)
+Out[15]: <Future pending>
+
+In [16]: coro.throw(Exception, 'blah')
+---------------------------------------------------------------------------
+Exception                                 Traceback (most recent call last)
+<ipython-input-16-862df14b942f> in <module>()
+----> 1 coro.throw(Exception, 'blah')
+
+<ipython-input-8-51f3b41575ab> in f()
+      1 async def f():
+----> 2     await asyncio.sleep(1.0)
+      3     return 123
+
+D:\ProgramData\Anaconda3\lib\asyncio\tasks.py in sleep(delay, result, loop)
+    480                                 future, result)
+    481     try:
+--> 482         return (yield from future)
+    483     finally:
+    484         h.cancel()
+
+Exception: blah
