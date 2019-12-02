@@ -1,0 +1,32 @@
+>>> a = float('inf')
+>>> b = float('-inf')
+>>> c = float('nan')
+>>> b
+-inf
+>>> a
+inf
+>>> c
+nan
+>>> import math
+>>> math.isinf(a)
+True
+>>> math.isinf(b)
+True
+>>> math.isinf(c)
+False
+>>> math.isnan(c)
+True
+>>> a = float('inf')
+>>> a + 10
+inf
+>>> 10 / a
+0.0
+>>> a = float('inf')
+>>> a/a
+nan
+>>> b = float('-inf')
+>>> a + b
+nan
+>>> c = float('nan')
+>>> c + 1
+nan
