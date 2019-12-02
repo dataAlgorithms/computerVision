@@ -1,0 +1,43 @@
+>>> import numpy as np
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+>>> iris = np.genfromtxt(url, delimiter=',', dtype='object')
+names = ('sepallength', 'sepalwidth', 'petallength', 'petalwidth', 'species')
+
+
+>>> names = ('sepallength', 'sepalwidth', 'petallength', 'petalwidth', 'species')
+>>> 
+>>> 
+>>> petal_length_bin = np.digitize(iris[:, 2].astype('float'), [0, 3, 5, 10])
+>>> petal_length_bin
+array([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+       1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2, 2, 3, 2, 2, 2, 2,
+       2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 2, 3, 3, 3,
+       3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 3, 2, 3, 3, 2, 2, 3, 3, 3, 3,
+       3, 3, 3, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3])
+>>> iris[:, 2]
+array([b'1.4', b'1.4', b'1.3', b'1.5', b'1.4', b'1.7', b'1.4', b'1.5',
+       b'1.4', b'1.5', b'1.5', b'1.6', b'1.4', b'1.1', b'1.2', b'1.5',
+       b'1.3', b'1.4', b'1.7', b'1.5', b'1.7', b'1.5', b'1.0', b'1.7',
+       b'1.9', b'1.6', b'1.6', b'1.5', b'1.4', b'1.6', b'1.6', b'1.5',
+       b'1.5', b'1.4', b'1.5', b'1.2', b'1.3', b'1.5', b'1.3', b'1.5',
+       b'1.3', b'1.3', b'1.3', b'1.6', b'1.9', b'1.4', b'1.6', b'1.4',
+       b'1.5', b'1.4', b'4.7', b'4.5', b'4.9', b'4.0', b'4.6', b'4.5',
+       b'4.7', b'3.3', b'4.6', b'3.9', b'3.5', b'4.2', b'4.0', b'4.7',
+       b'3.6', b'4.4', b'4.5', b'4.1', b'4.5', b'3.9', b'4.8', b'4.0',
+       b'4.9', b'4.7', b'4.3', b'4.4', b'4.8', b'5.0', b'4.5', b'3.5',
+       b'3.8', b'3.7', b'3.9', b'5.1', b'4.5', b'4.5', b'4.7', b'4.4',
+       b'4.1', b'4.0', b'4.4', b'4.6', b'4.0', b'3.3', b'4.2', b'4.2',
+       b'4.2', b'4.3', b'3.0', b'4.1', b'6.0', b'5.1', b'5.9', b'5.6',
+       b'5.8', b'6.6', b'4.5', b'6.3', b'5.8', b'6.1', b'5.1', b'5.3',
+       b'5.5', b'5.0', b'5.1', b'5.3', b'5.5', b'6.7', b'6.9', b'5.0',
+       b'5.7', b'4.9', b'6.7', b'4.9', b'5.7', b'6.0', b'4.8', b'4.9',
+       b'5.6', b'5.8', b'6.1', b'6.4', b'5.6', b'5.1', b'5.6', b'6.1',
+       b'5.6', b'5.5', b'4.8', b'5.4', b'5.6', b'5.1', b'5.1', b'5.9',
+       b'5.7', b'5.2', b'5.0', b'5.2', b'5.4', b'5.1'], dtype=object)
+>>> label_map = {1: 'small', 2: 'medium', 3: 'large', 4: np.nan}
+>>> petal_length_cat = [label_map[x] for x in petal_length_bin]
+>>> petal_length_cat
+['small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'small', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'large', 'medium', 'medium', 'medium', 'medium', 'medium', 'large', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'medium', 'large', 'large', 'large', 'large', 'large', 'large', 'medium', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'medium', 'large', 'medium', 'large', 'large', 'medium', 'medium', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'medium', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large', 'large']
+>>> 
