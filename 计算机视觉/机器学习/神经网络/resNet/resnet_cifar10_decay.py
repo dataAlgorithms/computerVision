@@ -1,3 +1,6 @@
+'''
+python resnet_cifar10_decay.py --output output --model output/checkpoints/epoch_10.hdf5 
+'''
 import matplotlib
 matplotlib.use("Agg")
 
