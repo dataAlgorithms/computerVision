@@ -1,3 +1,9 @@
+'''
+python resnet_cifar10.py --checkpoints output/checkpoints
+python resnet_cifar10.py --checkpoints output/checkpoints --model output/checkpoints/epoch_10.hdf5 --start-epoch 10
+'''
+
+
 import matplotlib
 matplotlib.use("Agg")
 
