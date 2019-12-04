@@ -108,3 +108,8 @@ model.fit_generator(
         epochs=80,
         callbacks=callbacks,
         verbose=1)
+
+'''
+code.review
+链接：http://note.youdao.com/noteshare?id=f3a59174c64ded6c12774089a6e26779&sub=562AB77886F247D7A386DB68F75676B6
+'''
