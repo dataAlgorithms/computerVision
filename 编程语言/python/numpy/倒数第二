@@ -1,0 +1,15 @@
+>>> import numpy as np
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+>>> iris = np.genfromtxt(url, delimiter=',', dtype='object')
+>>> # Get the species and petal length columns
+... petal_len_setosa = iris[iris[:, 4] == b'Iris-setosa', [2]].astype('float')
+>>> 
+>>> # Get the second last value
+... np.unique(np.sort(petal_len_setosa))[-2]
+1.7
+>>> petal_len_setosa
+array([1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.6, 1.4,
+       1.1, 1.2, 1.5, 1.3, 1.4, 1.7, 1.5, 1.7, 1.5, 1. , 1.7, 1.9, 1.6,
+       1.6, 1.5, 1.4, 1.6, 1.6, 1.5, 1.5, 1.4, 1.5, 1.2, 1.3, 1.5, 1.3,
+       1.5, 1.3, 1.3, 1.3, 1.6, 1.9, 1.4, 1.6, 1.4, 1.5, 1.4])
+>>> 
