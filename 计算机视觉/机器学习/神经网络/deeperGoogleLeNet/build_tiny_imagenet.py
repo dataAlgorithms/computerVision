@@ -1,3 +1,4 @@
+#python build_tiny_imagenet.py
 # import the necessary packages
 from config import tiny_imagenet_config_Linux as config
 from sklearn.preprocessing import LabelEncoder
