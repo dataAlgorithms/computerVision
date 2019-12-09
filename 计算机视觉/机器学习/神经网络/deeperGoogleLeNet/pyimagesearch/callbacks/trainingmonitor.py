@@ -23,7 +23,7 @@ class TrainingMonitor(BaseLogger):
         if self.jsonPath is not None:
             print('jsonPath:', self.jsonPath)
             if os.path.exists(self.jsonPath):
-                self.H = json.loads(open(self.jsonPath).read())
+                self.H = eval(json.loads(open(self.jsonPath).read()))
                 print('type:', type(self.H))
 
                 # check to see if a starting epoch was supplied
