@@ -1,4 +1,7 @@
 '''
+链接：https://pan.baidu.com/s/17FhTQYtWYwT0LWazDjvwNw 
+提取码：6au5
+
 python train.py --checkpoints output/checkpoints
 python train.py --checkpoints output/checkpoints \
 --model output/checkpoints/epoch_25.hdf5 --start-epoch 25
