@@ -1,0 +1,4 @@
+grep 123 . -r -l 列出包含123的文件(注意：不是文件名包含123，而是文件内容)
+grep 123 . -r -L 列出不包含123的文件
+
+https://blog.51cto.com/wangxiaoyong/2044596?source=dra
