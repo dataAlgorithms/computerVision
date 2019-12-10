@@ -1,0 +1,14 @@
+>>> from datetime import datetime
+>>> text = '2012-09-20'
+>>> y = datetime.strptime(text, '%Y-%m-%d')
+>>> y
+datetime.datetime(2012, 9, 20, 0, 0)
+>>> y.year
+2012
+>>> z = datetime.now()
+>>> diff = z - y
+>>> diff
+datetime.timedelta(days=2637, seconds=43523, microseconds=869812)
+>>> nice_z = datetime.strftime(z, '%A %B %d, %Y')
+>>> nice_z
+'Tuesday December 10, 2019'
