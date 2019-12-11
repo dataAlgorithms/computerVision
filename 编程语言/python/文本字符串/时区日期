@@ -1,0 +1,40 @@
+In [2]: from datetime import datetime                                                                                                                                                     
+In [6]: from pytz import timezone                                                                                                                                                         
+In [7]: d = datetime(2012, 12, 21, 9, 30, 0)                                                                                                                                              
+In [8]: d                                                                                                                                                                                 
+Out[8]: datetime.datetime(2012, 12, 21, 9, 30)
+
+In [9]: central = timezone('US/Central')                                                                                                                                                  
+
+In [10]: loc_d = central.localize(d)                                                                                                                                                      
+
+In [11]: loc_d                                                                                                                                                                            
+Out[11]: datetime.datetime(2012, 12, 21, 9, 30, tzinfo=<DstTzInfo 'US/Central' CST-1 day, 18:00:00 STD>)
+
+In [12]: bang_d = loc_d.astimezone(timezone('Asia/Kolkata'))                                                                                                                              
+
+In [13]: print(bang_d)                                                                                                                                                                    
+2012-12-21 21:00:00+05:30
+
+In [14]: d = datetime(2013, 3, 10, 1, 45)                                                                                                                                                 
+
+In [15]: from datetime import timedelta                                                                                                                                                   
+
+In [16]: later = central.normalize(loc_d + timedelta(minutes=30))                                                                                                                         
+
+In [17]: later                                                                                                                                                                            
+Out[17]: datetime.datetime(2012, 12, 21, 10, 0, tzinfo=<DstTzInfo 'US/Central' CST-1 day, 18:00:00 STD>)
+In [19]: import pytz                                                                                                                                                                      
+
+In [20]: utc_d = loc_d.astimezone(pytz.utc)                                                                                                                                               
+
+In [21]: print(utc_d)                                                                                                                                                                     
+2012-12-21 15:30:00+00:00
+
+In [22]: later_utc = utc_d + timedelta(minutes=30)                                                                                                                                        
+
+In [23]: print(later_utc.astimezone(central))                                                                                                                                             
+2012-12-21 10:00:00-06:00
+
+In [24]: pytz.country_timezones['IN']                                                                                                                                                     
+Out[24]: ['Asia/Kolkata']
