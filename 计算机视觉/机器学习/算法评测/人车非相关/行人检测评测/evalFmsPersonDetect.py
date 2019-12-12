@@ -103,6 +103,7 @@ def drawOld(gt, rt, cType):
             rRois = rt[img]
             gRois = gt[img]
         except:
+            
             lostNums += 1
             continue
 
@@ -168,6 +169,10 @@ def draw(gt, rt, cType, virtual=1):
             if gts == cType:
                 totalNums += 1
 
+        if int(virtual) == 1:
+            im = cv2.imread("/mnt/cephfs/testData/fms/personDetect/" + img)
+            im_copy = im.copy()
+
         #print('img:', img)
         try:
             rRois = rt[img]
@@ -177,11 +182,13 @@ def draw(gt, rt, cType, virtual=1):
                 gx, gy, gw, gh, gts = gRoi
                 if gts == cType:
                     lostNums += 1
-            continue
 
-        if int(virtual) == 1:
-            im = cv2.imread("/mnt/cephfs/testData/fms/personDetect/" + img)
-            im_copy = im.copy()
+                if int(virtual) == 1:
+                    cv2.rectangle(im_copy,(int(gx),int(gy)),(int(gw)+int(gx),int(gh)+int(gy)),(0,255,0),1)
+                    cv2.putText(im_copy, str(gts), (int(gx), int(gy)+20), font, 1, (0, 255, 0), 1)
+
+            cv2.imwrite("diff/draw." + os.path.basename(img), im_copy)
+            continue
 
         #print('rRois:', rRois)
         #print('gRois:', gRois)
