@@ -1,0 +1,29 @@
+>>> with open('/etc/passwd') as f:
+...     while True:
+...         try:
+...             line = next(f)
+...             print(line)
+...         except StopIteration:
+...             pass
+
+>>> with open('/etc/passwd') as pd:
+...     while True:                
+...         line = next(pd, None)  
+...         if line is None:       
+...             break
+...         print(line, end='')
+... 
+
+>>> items = [1, 2, 3]
+>>> it = iter(items)
+>>> next(it)
+1
+>>> next(it)
+2
+>>> next(it)
+3
+>>> next(it)
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+StopIteration
+>>> 
