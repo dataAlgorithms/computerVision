@@ -1,0 +1,25 @@
+>>> class Node:
+...     def __init__(self, value):
+...         self._value = value
+...         self._children = []
+...     def __repr__(self):
+...         return 'Node({!r})'.format(self._value)
+...     def add_child(self, node):
+...         self._children.append(node)
+...     def __iter__(self):
+...         return iter(self._children)
+... 
+>>> 
+>>> 
+>>> a = Node(0)
+>>> b = Node(1)
+>>> c = Node(2)
+>>> a.add_child(b)
+>>> a.add_child(c)
+>>> a
+Node(0)
+>>> for ch in a:
+...     print(ch)
+... 
+Node(1)
+Node(2)
