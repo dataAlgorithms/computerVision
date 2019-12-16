@@ -1,0 +1,23 @@
+# Input
+np.random.seed(100)
+a = np.random.uniform(1,50, 20)
+
+# Solution:
+print(a.argsort())
+#> [18 7 3 10 15]
+
+# Solution 2:
+np.argpartition(-a, 5)[:5]
+#> [15 10  3  7 18]
+
+# Below methods will get you the values.
+# Method 1:
+a[a.argsort()][-5:]
+
+# Method 2:
+a[a.argsort()][-5:]
+# Method 3:
+np.partition(a, kth=-5)[-5:]
+
+# Method 4:
+a[np.argpartition(-a, 5)][:5]
