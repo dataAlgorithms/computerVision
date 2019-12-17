@@ -1,0 +1,26 @@
+>>> import numpy as np
+>>> np.random.seed(100)
+>>> arr = np.random.randint(1,11,size=(6, 10))
+>>> arr
+array([[ 9,  9,  4,  8,  8,  1,  5,  3,  6,  3],
+       [ 3,  3,  2,  1,  9,  5,  1, 10,  7,  3],
+       [ 5,  2,  6,  4,  5,  5,  4,  8,  2,  2],
+       [ 8,  8,  1,  3, 10, 10,  4,  3,  6,  9],
+       [ 2,  1,  8,  7,  3,  1,  9,  3,  6,  2],
+       [ 9,  2,  6,  5,  3,  9,  4,  6,  1, 10]])
+>>> def counts_of_all_values_rowwise(arr2d):
+...     # Unique values and its counts row wise
+...     num_counts_array = [np.unique(row, return_counts=True) for row in arr2d]
+...     # Counts of all values row wise
+...     return([[int(b[a==i]) if i in a else 0 for i in np.unique(arr2d)] for a, b in num_counts_array])
+... 
+>>> print(np.arange(1,11))
+[ 1  2  3  4  5  6  7  8  9 10]
+>>> counts_of_all_values_rowwise(arr)
+[[1, 0, 2, 1, 1, 1, 0, 2, 2, 0], [2, 1, 3, 0, 1, 0, 1, 0, 1, 1], [0, 3, 0, 2, 3, 1, 0, 1, 0, 0], [1, 0, 2, 1, 0, 1, 0, 2, 1, 2], [2, 2, 2, 0, 0, 1, 1, 1, 1, 0], [1, 1, 1, 1, 1, 2, 0, 0, 2, 1]]
+>>> arr = np.array([np.array(list('bill clinton')), np.array(list('narendramodi')), np.array(list('jjayalalitha'))])
+>>> print(np.unique(arr))
+[' ' 'a' 'b' 'c' 'd' 'e' 'h' 'i' 'j' 'l' 'm' 'n' 'o' 'r' 't' 'y']
+>>> counts_of_all_values_rowwise(arr)
+[[1, 0, 1, 1, 0, 0, 0, 2, 0, 3, 0, 2, 1, 0, 1, 0], [0, 2, 0, 0, 2, 1, 0, 1, 0, 0, 1, 2, 1, 2, 0, 0], [0, 4, 0, 0, 0, 0, 1, 1, 2, 2, 0, 0, 0, 0, 1, 1]]
+>>> 
