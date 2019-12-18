@@ -1,0 +1,65 @@
+方法一:堆栈
+# use stack to check parentheses
+open_list = ["[", "{", "("]
+close_list = ["]", "}", ")"]
+
+def check(myStr):
+    stack = []
+    for i in myStr:
+        if i in open_list:
+            stack.append(i)
+        elif i in close_list:
+            pos = close_list.index(i)
+            if ((len(stack) > 0) and
+                  (open_list[pos] == stack[len(stack)-1])):
+                stack.pop()
+            else:
+                return "Unbalanced"
+    if len(stack) == 0:
+        return 'Balanced'
+
+string = "{[]{()}}"
+print(string,"-", check(string))
+
+string = "[{}{})(]"
+print(string,"-", check(string))
+## -- End pasted text --
+{[]{()}} - Balanced
+[{}{})(] - Unbalanced
+
+方法二:队列
+# use queue to check balance parenthese
+def check(expression):
+    open_tup = tuple('({[')
+    close_tup = tuple(')}]')
+    map = dict(zip(open_tup, close_tup))
+    queue = []
+
+    for i in expression:
+        if i in open_tup:
+            queue.append(map[i])
+        elif i in close_tup:
+            if not queue or i != queue.pop():
+                return 'Unbalanced'
+    return 'Balanced'
+
+string = "{[]{()}}"
+print(string, "-", check(string))
+## -- End pasted text --
+{[]{()}} - Balanced
+
+方法三: 消除法
+# Use "elimination based" to check balance parentheses
+def check(my_string):
+    brackets = ['()', '{}', '[]']
+    while any(x in my_string for x in brackets):
+        for br in brackets:
+            my_string = my_string.replace(br, '')
+    return not my_string
+
+string = "{[]{()}}"
+print(string, "-", "Balanced"
+      if check(string) else "Unbalanced")
+
+## -- End pasted text --
+{[]{()}} - Balanced
