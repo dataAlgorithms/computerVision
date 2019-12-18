@@ -1,0 +1,26 @@
+In [1]: import numpy as np
+
+In [2]: arr1 = np.arange(3)
+   ...: arr2 = np.arange(3,7)
+   ...: arr3 = np.arange(7,10)
+   ...:
+   ...: array_of_arrays = np.array([arr1, arr2, arr3])
+   ...:
+
+In [4]: array_of_arrays
+Out[4]:
+array([array([0, 1, 2]), array([3, 4, 5, 6]), array([7, 8, 9])],
+      dtype=object)
+
+In [5]:
+
+In [5]: arr_2d = np.array([a for arr in array_of_arrays for a in arr]
+   ...: )
+
+In [6]: arr_2d
+Out[6]: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+In [7]: arr_2d = np.concatenate(array_of_arrays)
+
+In [8]: arr_2d
+Out[8]: array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])      
