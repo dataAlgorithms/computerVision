@@ -1,0 +1,28 @@
+>>> import numpy as np
+>>> np.random.seed(101) 
+>>> arr = np.random.randint(1,4, size=6)
+arr>>> arr
+array([2, 3, 2, 2, 2, 1])
+>>> 
+>>> def one_hot_encodings(arr):
+...     uniqs = np.unique(arr)
+...     out = np.zeros((arr.shape[0], uniqs.shape[0]))
+...     for i, k in enumerate(arr):
+...         out[i, k-1] = 1
+...     return out
+... 
+>>> one_hot_encodings(arr)
+array([[0., 1., 0.],
+       [0., 0., 1.],
+       [0., 1., 0.],
+       [0., 1., 0.],
+       [0., 1., 0.],
+       [1., 0., 0.]])
+>>> (arr[:, None] == np.unique(arr)).view(np.int8)
+array([[0, 1, 0],
+       [0, 0, 1],
+       [0, 1, 0],
+       [0, 1, 0],
+       [0, 1, 0],
+       [1, 0, 0]], dtype=int8)
+>>> 
