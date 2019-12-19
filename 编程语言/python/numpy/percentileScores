@@ -1,9 +1,4 @@
 >>> import numpy as np
->>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
-  File "<stdin>", line 1
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"
-                                                                                   ^
-SyntaxError: EOL while scanning string literal
 >>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
 >>> sepallength = np.genfromtxt(url, delimiter=',', dtype='float', usecols=[0])
 >>> np.percentile(sepallength, q=[5, 95])
