@@ -1,0 +1,23 @@
+import cv2
+import sys
+
+def getIntersect(a,b):
+    x = max(a[0], b[0])
+    y = max(a[1], b[1])
+    w = min(a[0]+a[2], b[0]+b[2]) - x
+    h = min(a[1]+a[3], b[1]+b[3]) - y
+    if w<0 or h<0: return ()
+    return (x, y, w, h)
+
+if __name__ == '__main__':
+    
+    a = 50, 50, 80, 80
+    b = 60, 60, 100, 100
+    im = cv2.imread(sys.argv[1])
+    x, y, w, h = getIntersect(a, b)
+    cv2.rectangle(im, (a[0], a[1]), (a[0]+a[2], a[1]+a[3]), (0,255,0))
+    cv2.rectangle(im, (b[0], b[1]), (b[0]+b[2], b[1]+b[3]), (0,255,0))
+    x, y, w, h = getIntersect(a,b)
+    cv2.rectangle(im, (x, y), (x+w, y+h), (0,0,255))
+    #cv2.imshow('a.jpg', im)
+    cv2.imwrite('a.jpg', im)
