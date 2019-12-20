@@ -1,0 +1,22 @@
+from scipy import misc
+import os
+
+def cutHalf(img):
+    # Read the image
+    im = misc.imread(img)
+    height, width, _ = im.shape
+
+    # Cut the image in half
+    width_cutoff = width // 2
+    s1 = im[:, :width_cutoff]
+    s2 = im[:, width_cutoff:]
+
+    # Save each half
+    misc.imsave("half/left_{}".format(img), s1)
+    misc.imsave("half/right_{}".format(img), s2)
+
+if __name__ == '__main__':
+    for img in os.listdir("."):
+        if not img.endswith(".jpg"):
+            continue
+        cutHalf(img)
