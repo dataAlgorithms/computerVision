@@ -1,0 +1,91 @@
+#!/usr/bin/env python
+#!coding=utf-8
+
+'''
+root@deepface-19:/home/vega# head result.VehicleDetectorCw_trt_60_pascal
+/home/vega/testData/halfImg/left_GJNK012-2-2-20191219163722995-津CL8762-2-Z-000-109.jpg 0.999021 1 2509 1029 892 982 0.99845 1 1549 524 646 778 0.998331 1 7 1102 767 931 0.982742 1 0 1 563 390 0.982533 1 1920 6 392 243
+/home/vega/testData/halfImg/left_GJNK012-2-1-20191219164147036-津E20755-2-Z-000-000.jpg 0.999301 1 518 348 531 526 0.999009 1 1832 576 671 646 0.998418 1 59 152 475 396 0.99706 1 874 3 338 248 0.991315 1 2786 1636 635 633 0.935729 1 985 1834 939 437
+/home/vega/testData/halfImg/right_120400000000095023-NK502-4-2-20191219155841413-津RWN688-2-00-J-070-000-00000-121b4c3c-1.jpg 0.99857 1 1854 194 394 413 0.996844 1 639 763 724 842
+/home/vega/testData/halfImg/left_GJNK012-2-1-20191219163950351-津KV3868-2-Z-000-080.jpg 0.999203 1 1977 85 426 392 0.999149 1 950 420 546 546 0.99896 1 2226 559 686 644 0.99595 1 1330 9 340 246 0.993532 1 833 2 314 201
+/home/vega/testData/halfImg/right_120400000000095023-NK502-4-2-20191219155848257-津RHB207-2-00-J-070-000-00000-6b156110-1.jpg 0.998596 1 1931 642 686 780 0.997764 1 801 582 664 969 0.994321 1 0 151 291 346 0.993764 1 1699 32 337 276 0.984211 1 5 563 379 606
+/home/vega/testData/halfImg/left_120600000000095041-HQ504-2-2-20191219164340260-津HD6550-2-00-A-80-0-00000-07A2A4C0-1.jpg 0.997777 1 738 477 769 873
+/home/vega/testData/halfImg/right_GJHP002-3-1-20191219163802354-津AD15890-52-Z-000-070.jpg 0.999476 1 2 122 486 256 0.999414 1 743 242 356 236 0.999289 1 2308 153 265 218 0.999275 1 1983 133 275 210 0.998049 1 166 205 408 245 0.997839 1 1259 748 536 482 0.997807 1 981 169 255 201 0.997623 1 1634 418 372 315 0.997467 1 1992 1087 680 760 0.996595 1 68 460 503 358 0.994331 1 979 78 365 162 0.963701 1 478 142 313 214 0.957525 1 145 309 457 271 0.94987 1 0 430 265 345 0.906362 4 1 761 104 409 0.744992 1 753 107 311 197
+/home/vega/testData/halfImg/left_GJNK012-2-3-20191219163751541-豫A8HX48-2-Z-000-000.jpg 0.998999 1 1578 464 608 710 0.998907 1 559 626 604 605 0.99548 1 165 18 460 352 0.990366 1 5 1195 954 1077 0.987071 1 0 430 373 531
+/home/vega/testData/halfImg/right_GJNK012-2-1-20191219164257851-津C97389-2-Z-000-169.jpg 0.998877 1 1217 646 694 780 0.998861 1 1517 145 457 442 0.99856 1 555 44 370 298 0.998518 1 2230 932 844 884 0.988428 1 0 577 388 602
+/home/vega/testData/halfImg/left_GJNK012-2-4-20191219163500353-津HJW090-2-Z-000-024.jpg 0.999468 1 2029 894 632 650 0.99891 1 1229 77 769 767
+root@deepface-19:/home/vega# 
+'''
+import numpy as np
+import cv2
+from collections import defaultdict
+import sys
+import os
+import copy
+font = cv2.FONT_HERSHEY_SIMPLEX
+
+# calculate iou
+def iou(b1, b2):
+    iou_val = 0.0
+    x1 = np.max([b1[0], b2[0]])
+    y1 = np.max([b1[1], b2[1]])
+    x2 = np.min([b1[0] + b1[2], b2[0] + b2[2]])
+    y2 = np.min([b1[1] + b1[3], b2[1] + b2[3]])
+    w = np.max([0, x2 - x1])
+    h = np.max([0, y2 - y1])
+    if w != 0 and h != 0:
+        iou_val = float(w * h) / (b1[2] * b1[3] + b2[2] * b2[3] - w * h)
+    return iou_val
+
+def prtDict(rtName):
+
+    rtDict = {}
+    with open(rtName) as rt:
+        for line in rt:
+            line = line.strip("\r\n")
+            if '.jpg ' in line:
+                lines = line.split(".jpg ")
+            else:
+                lines = line.split(".jpg")
+            img = lines[0] + '.jpg'
+            try:
+                linesLeft = lines[1].split(" ")
+                if img not in rtDict:
+                    rtDict[img] = []
+            except:
+                rtDict[img] = []
+                continue
+            numby6 = len(linesLeft)//6
+            for i in range(numby6):
+                startIndex = i*6
+                endIndex = (i+1)*6
+                items = linesLeft[startIndex:endIndex]
+                c,t,x,y,w,h = items
+                rtDict[img].append([x,y,w,h,t])
+
+    return rtDict
+
+# main
+def draw(rt):
+
+    for img in rt:
+
+        #print('img:', img)
+        rRois = rt[img]
+        im = cv2.imread(img)
+        im_copy = im.copy()
+
+        for oRoi in rRois:
+            x, y, w, h, t = oRoi
+    
+            if int(t) != 1:
+                continue
+            x1 = int(x)
+            y1 = int(y)
+            x2 = int(x) + int(w)
+            y2 = int(y) + int(h)
+            cropped = im_copy[y1:y2, x1:x2]
+            cv2.imwrite("cropAll/{}_{}_{}_{}_{}".format(x1, y1, x2, y2, os.path.basename(img)), cropped)
+
+if __name__ == "__main__":
+    rt = prtDict(sys.argv[1])
+    draw(rt)
