@@ -1,0 +1,102 @@
+方法1:reverse法
+In [1]: %paste
+def reverse(s):
+    return s[::-1]
+
+def isPalindrome(s):
+    rev = reverse(s)
+    if s == rev:
+        return True
+    return False
+
+if __name__ == '__main__':
+    s = "malayalam"
+    ans = isPalindrome(s)
+    print(ans)
+
+## -- End pasted text --
+True
+
+In [2]: isPalindrome('nihao')
+Out[2]: False
+
+方法2:迭代法
+def isPalindrome(str):
+
+    for i in range(0, len(str)//2):
+        if str[i] != str[len(str)-i-1]:
+            return False
+    return True
+
+if __name__ == '__main__':
+    s = "malayalam"
+    ans = isPalindrome(s)
+    print(ans)
+
+## -- End pasted text --
+True
+
+方法3:额外变量法
+In [1]: %paste
+x = "malayalam"
+w = ""
+for i in x:
+    w = i + w
+if (x==w):
+    print("YES")
+else:
+    print('NO')
+
+## -- End pasted text --
+YES
+
+In [2]: %paste
+x = "malayalam1"
+w = ""
+for i in x:
+    w = i + w
+if (x==w):
+    print("YES")
+else:
+    print('NO')
+
+## -- End pasted text --
+NO
+
+方法4:堆栈法
+class Stack:
+    def __init__(self):
+        self.mylist = []
+    def push(self, item):
+        self.mylist.append(item)
+    def pop(self):
+        ele = self.mylist.pop()
+        return ele
+
+def isPalindrome(myStr):
+    stack = Stack()
+    
+    # find the mid
+    mid = len(myStr) // 2
+    for i in range(mid):
+        stack.push(myStr[i])
+
+    # check if the len of the string is odd
+    # if odd then neglect the middle character
+    if len(myStr) % 2 != 0:
+        i += 1
+    i += 1
+    while i < len(myStr):
+        ele = stack.pop()
+        # if the char differ then the given string is not a palindrome
+        if ele != mystr[i]:
+            return 0
+        i += 1
+
+    return 1
+
+if __name__ == '__main__':
+    mystr = 'maddam1'
+    print(isPalindrome(mystr)) 
+    mystr = 'maddam'
+    print(isPalindrome(mystr))
