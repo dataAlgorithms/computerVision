@@ -1,0 +1,25 @@
+>>> def countdown(n):
+...     while True:
+...         yield n
+...         n += 1
+... 
+>>> c = countdown(0)
+>>> c[10:20]
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+TypeError: 'generator' object is not subscriptable
+>>> import itertools
+>>> for item in itertools.islice(c, 10, 20):
+...     print(item)
+... 
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+>>> 
