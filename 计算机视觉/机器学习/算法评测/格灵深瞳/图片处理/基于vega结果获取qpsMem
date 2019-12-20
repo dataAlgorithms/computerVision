@@ -1,0 +1,36 @@
+import re
+import sys
+import os
+
+modeQpsMemDict = {}
+
+qpsname = sys.argv[1]
+resultCsv = sys.argv[2]
+
+subject = open(qpsname).read()
+print(subject)
+results = re.findall(r"(?i)\| ([0-9a-zA-Z_-]+) \| (\d+) \| (\d+) \| (\d+) \| (\d+) \| (\d+) \| (\d+) \|", subject)
+print(results)
+for result in results:
+    model = result[0]
+    qps = result[3]
+
+    if model not in modeQpsMemDict:
+        modeQpsMemDict[model] = {}
+        modeQpsMemDict[model] = {"qps":qps, "mem":""}
+        
+subject = open(qpsname).read()
+results = re.findall(r"(?si)\| ([0-9a-zA-Z_-]+) \| (\d+) \| (\d+) \| (\d+) \| (\d+)|$", subject)
+print(results)
+for result in results:
+    model = result[0]
+    mem = result[4]
+
+    modeQpsMemDict[model]["mem"] = mem
+
+with open(resultCsv, 'w') as rbj:
+    rbj.write("Model,Qps,Mem{}".format(os.linesep))
+    for model in modeQpsMemDict:
+        qps = modeQpsMemDict[model]['qps']
+        mem = modeQpsMemDict[model]['mem']
+        rbj.write("{},{},{}{}".format(model,qps,mem,os.linesep))
