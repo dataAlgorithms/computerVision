@@ -1,0 +1,20 @@
+>>> import numpy as np
+>>> np.random.seed(100)
+>>> a = np.random.randint(1,10, [5,3])
+>>> a
+array([[9, 9, 4],
+       [8, 8, 1],
+       [5, 3, 6],
+       [3, 3, 3],
+       [2, 1, 9]])
+>>> np.amax(a, axis=1)
+array([9, 8, 6, 3, 9])
+>>> np.apply_along_axis(np.max, arr=a, axis=1)
+array([9, 8, 6, 3, 9])
+>>> 
+>>> 
+>>> np.amax(a, axis=0)                        
+array([9, 9, 9])
+>>> np.apply_along_axis(np.max, arr=a, axis=0)
+array([9, 9, 9])
+>>> 
