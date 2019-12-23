@@ -1,0 +1,6 @@
+>>> import numpy as np
+>>> np.random.seed(100)
+>>> a = np.random.randint(1,10, [5,3])
+>>> np.apply_along_axis(lambda x: np.min(x)/np.max(x), arr=a, axis=1)
+array([0.44444444, 0.125     , 0.5       , 1.        , 0.11111111])
+>>> 
