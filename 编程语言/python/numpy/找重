@@ -1,0 +1,25 @@
+>>> import numpy as np
+>>> np.random.seed(100)
+>>> a = np.random.randint(0, 5, 10)
+
+>>> 
+>>> ## Solution
+... # There is no direct function to do this as of 1.13.3
+... 
+>>> # Create an all True array
+... out = np.full(a.shape[0], True)
+>>> 
+>>> out
+array([ True,  True,  True,  True,  True,  True,  True,  True,  True,
+        True])
+>>> a
+array([0, 0, 3, 0, 2, 4, 2, 2, 2, 2])
+>>> unique_positions = np.unique(a, return_index=True)[1]
+>>> unique_positions
+array([0, 4, 2, 5])
+>>> a
+array([0, 0, 3, 0, 2, 4, 2, 2, 2, 2])
+>>> out[unique_positions] = False
+>>> out
+array([False,  True, False,  True, False, False,  True,  True,  True,
+        True])
