@@ -1,0 +1,39 @@
+>>> my_list = ['a', 'b', 'c']
+>>> for index, item in enumerate(my_list):
+...     print(index, item)
+0 a
+1 b
+2 c
+>>> for index, item in enumerate(my_list, 1):
+...     print(index, item)
+... 
+1 a
+2 b
+3 c
+
+def parse_data(filename):
+    with open(filename, 'rt') as f:
+        for lineno, line in enumerate(f, 1):
+            fields = line.split()
+            try:
+                count = int(fields[1])
+            except ValueError as e:
+                print('Line {}: Parse error: {}'.format(lineno, e))
+
+parse_data('2')
+
+import sys
+import os
+from collections import defaultdict
+
+filename = sys.argv[1]
+word_summary = defaultdict()
+with open('2') as f:
+    lines = f.readlines()
+
+for idx, line in enumerate(lines):
+    words = [w.strip().lower() for w in line.split()]
+    for word in words:
+        word_summary[word].append(idx)
+
+print('word_summary:', word_summary)
