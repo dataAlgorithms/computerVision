@@ -27,7 +27,7 @@ import os
 from collections import defaultdict
 
 filename = sys.argv[1]
-word_summary = defaultdict()
+word_summary = defaultdict(list)
 with open('2') as f:
     lines = f.readlines()
 
