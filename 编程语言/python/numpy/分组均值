@@ -1,0 +1,21 @@
+>>> import numpy as np
+>>> url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+>>> iris = np.genfromtxt(url, delimiter=',', dtype='object')
+names = ('sepallength', 'sepalwidth', 'petallength', 'petalwidth', 'species')
+
+>>> names = ('sepallength', 'sepalwidth', 'petallength', 'petalwidth', 'species')
+>>> 
+>>> numeric_column = iris[:, 1].astype('float')  # sepalwidth
+>>> grouping_column = iris[:, 4]  # species
+>>> 
+>>> # List comprehension version
+... [[group_val, numeric_column[grouping_column==group_val].mean()] for group_val in np.unique(grouping_column)]
+[[b'Iris-setosa', 3.418], [b'Iris-versicolor', 2.7700000000000005], [b'Iris-virginica', 2.974]]
+>>> 
+>>> # For Loop version
+... output = []
+>>> for group_val in np.unique(grouping_column):
+...     output.append([group_val, numeric_column[grouping_column==group_val].mean()])
+... 
+>>> output
+[[b'Iris-setosa', 3.418], [b'Iris-versicolor', 2.7700000000000005], [b'Iris-virginica', 2.974]]
