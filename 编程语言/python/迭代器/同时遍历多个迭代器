@@ -1,0 +1,31 @@
+>>> a = [1, 2, 3]
+>>> b = [4, 5, 6] 
+>>> for i in zip(a, b):
+...     print(i)
+... 
+(1, 4)
+(2, 5)
+(3, 6)
+>>> 
+>>> la = [1, 2, 3]
+>>> lb = [4, 5, 6, 7]
+>>> 
+>>> from itertools import zip_longest
+>>> 
+>>> 
+>>> for i in zip_longest(la, lb):    
+...     print(i)                     
+... 
+(1, 4)
+(2, 5)
+(3, 6)
+(None, 7)
+>>> 
+>>> for i in zip_longest(la, lb, fillvalue=0):
+...     print(i)
+... 
+(1, 4)
+(2, 5)
+(3, 6)
+(0, 7)
+>>> 
