@@ -1,0 +1,13 @@
+>>> a = [1, 2, 3]
+>>> b = ['a',  'b', 'c']
+>>> from itertools import chain
+>>> for item in chain(a, b):
+...     print(item)
+... 
+1
+2
+3
+a
+b
+c
+>>> 
