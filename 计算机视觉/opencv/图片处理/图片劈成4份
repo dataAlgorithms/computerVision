@@ -1,0 +1,40 @@
+import cv2
+import os
+
+for index, img in enumerate(os.listdir('.')):
+    if not img.endswith(".jpg"):
+        continue
+
+    im = cv2.imread(img)
+    height, width, _ = im.shape
+
+    y1_0 = 0
+    y2_0 =int( 0.5*height)
+    x1_0 = 0
+    x2_0 = int(0.5*width)
+
+    y1_1 = 0
+    y2_1 = int( 0.5*height)
+    x1_1 = int(0.5*width)
+    x2_1 = width
+
+    y1_2 = int(0.5*height)
+    y2_2 = height
+    x1_2 = 0
+    x2_2 = int(0.5*width)
+
+
+    y1_3 = int(0.5*height)
+    y2_3 = height
+    x1_3 = int(0.5*width)
+    x2_3 = width
+
+    i0 = im[y1_0:y2_0,x1_0:x2_0]
+    i1 = im[y1_1:y2_1,x1_1:x2_1]
+    i2 = im[y1_2:y2_2,x1_2:x2_2]
+    i3 = im[y1_3:y2_3,x1_3:x2_3]
+
+    cv2.imwrite("crop/{}_{}_{}_{}_{}.jpg".format(y1_0,y2_0,x1_0,x2_0, index), i0)
+    cv2.imwrite("crop/{}_{}_{}_{}_{}.jpg".format(y1_1,y2_1,x1_1,x2_1, index), i1)
+    cv2.imwrite("crop/{}_{}_{}_{}_{}.jpg".format(y1_2,y2_2,x1_2,x2_2, index), i2)
+    cv2.imwrite("crop/{}_{}_{}_{}_{}.jpg".format(y1_3,y2_3,x1_3,x2_3, index), i3)
