@@ -1,0 +1,63 @@
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/basic# cat flattenIterator.py 
+from collections import Iterable
+
+def flatten(items, ignore_types=(str, bytes)):
+    for x in items:
+        if isinstance(x, Iterable) and not isinstance(x, ignore_types):
+            yield from flatten(x)
+        else:
+            yield x
+
+items = [1, 2, [3, 4, [5, 6], 7], 8]
+# Produces 1 2 3 4 5 6 7 8
+for x in flatten(items):
+    print(x)
+
+items = ['Dave', 'Paula', ['Thomas', 'Lewis']]
+for x in flatten(items):
+    print(x)
+
+def flattenOld(items, ignore_types=(str, bytes)):
+    for x in items:
+        if isinstance(x, Iterable) and not isinstance(x, ignore_types):
+            for i in flatten(x):
+                yield i
+        else:
+            yield x
+
+items = [1, 2, [3, 4, [5, 6], 7], 8]
+# Produces 1 2 3 4 5 6 7 8
+for x in flattenOld(items):
+    print(x)
+
+items = ['Dave', 'Paula', ['Thomas', 'Lewis']]
+for x in flattenOld(items):
+    print(x)
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/basic# python3 flattenIterator.py 
+flattenIterator.py:1: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3,and in 3.9 it will stop working
+  from collections import Iterable
+1
+2
+3
+4
+5
+6
+7
+8
+Dave
+Paula
+Thomas
+Lewis
+1
+2
+3
+4
+5
+6
+7
+8
+Dave
+Paula
+Thomas
+Lewis
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/basic# 
