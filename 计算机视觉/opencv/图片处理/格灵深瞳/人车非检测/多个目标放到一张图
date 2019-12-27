@@ -1,0 +1,35 @@
+from imutils import build_montages
+import os
+import sys
+import cv2
+import math
+import sys
+
+font = cv2.FONT_HERSHEY_SIMPLEX
+
+dirname = sys.argv[1]
+
+images = []
+for filename in sorted(os.listdir(dirname)):
+    #print(filename)
+    filename = dirname +"/"+ filename
+    print('file:', filename)
+    image = cv2.imread(r"%s" % filename)
+    image = cv2.resize(image, (500, 500))
+    images.append(image)
+    
+
+#print('images:', images)
+if len(images) < 5:
+    w = len(images)
+    h = 1
+else:
+    w = 5
+    h = 1.0*len(images)/w
+    h = int(math.ceil(h))
+    if h == 0:
+        h = 1
+                
+montage = build_montages(images, (500, 500), (w, h))[0]
+cv2.imwrite("1" + ".jpg", montage)
+cv2.waitKey(0)
