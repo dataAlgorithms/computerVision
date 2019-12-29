@@ -1,0 +1,74 @@
+import numpy as np
+import cv2
+from collections import defaultdict
+import sys
+import os
+import copy
+font = cv2.FONT_HERSHEY_SIMPLEX
+
+# calculate iou
+def iou(b1, b2):
+    iou_val = 0.0
+    x1 = np.max([b1[0], b2[0]])
+    y1 = np.max([b1[1], b2[1]])
+    x2 = np.min([b1[0] + b1[2], b2[0] + b2[2]])
+    y2 = np.min([b1[1] + b1[3], b2[1] + b2[3]])
+    w = np.max([0, x2 - x1])
+    h = np.max([0, y2 - y1])
+    if w != 0 and h != 0:
+        iou_val = float(w * h) / (b1[2] * b1[3] + b2[2] * b2[3] - w * h)
+    return iou_val
+
+def prtDict(rtName):
+
+    rtDict = {}
+    with open(rtName) as rt:
+        for line in rt:
+            line = line.strip("\r\n")
+            if '.jpg ' in line:
+                lines = line.split(".jpg ")
+            else:
+                lines = line.split(".jpg")
+            img = lines[0] + '.jpg'
+            try:
+                linesLeft = lines[1].split(" ")
+                if img not in rtDict:
+                    rtDict[img] = []
+            except:
+                rtDict[img] = []
+                continue
+            numby6 = len(linesLeft)//6
+            for i in range(numby6):
+                startIndex = i*6
+                endIndex = (i+1)*6
+                items = linesLeft[startIndex:endIndex]
+                c,t,x,y,w,h = items
+                rtDict[img].append([x,y,w,h,t])
+
+    return rtDict
+
+# main
+def draw(rt):
+
+    for img in rt:
+
+        #print('img:', img)
+        rRois = rt[img]
+        im = cv2.imread(img)
+        im_copy = im.copy()
+
+        for oRoi in rRois:
+            x, y, w, h, t = oRoi
+    
+            if int(t) != 1:
+                continue
+            x1 = int(x)
+            y1 = int(y)
+            x2 = int(x) + int(w)
+            y2 = int(y) + int(h)
+            cropped = im_copy[y1:y2, x1:x2]
+            cv2.imwrite("cropAll/{}_{}_{}_{}_{}".format(x1, y1, x2, y2, os.path.basename(img)), cropped)
+
+if __name__ == "__main__":
+    rt = prtDict(sys.argv[1])
+    draw(rt)
