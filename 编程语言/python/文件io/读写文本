@@ -64,12 +64,6 @@ fjdkjfkdjfk
 ...     w.write("nihao\r\nfjdkfj\r\nfdjfkd\r\n")
 ... 
 23
->>> with open('otherfile.txt', 'wt') as w:
-...     pritn('nihao', w)
-... 
-Traceback (most recent call last):
-  File "<stdin>", line 2, in <module>
-NameError: name 'pritn' is not defined
 >>> 
 >>> with open('otherfile.txt', 'wt') as w:
 ...     print('nihao', file=w)              
