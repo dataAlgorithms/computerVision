@@ -1,0 +1,35 @@
+root@deepface-19:/data/zhouping/scripts/tmp# python36 1
+True
+False
+root@deepface-19:/data/zhouping/scripts/tmp# cat 1
+# Function to check validity of stack sequence 
+def validateStackSequence(pushed, popped): 
+    # maintain count of popped elements 
+    j = 0
+  
+    # an empty stack 
+    stack = [] 
+  
+    for x in pushed: 
+        stack.append(x) 
+  
+        # check if appended value is next to be popped out 
+        while stack and j < len(popped) and stack[-1] == popped[j]: 
+            stack.pop() 
+            j = j + 1
+  
+    return j == len(popped) 
+  
+  
+# Driver code 
+pushed = [1, 2, 3, 4, 5, 6] 
+popped = [3, 2, 5, 6, 4, 1] 
+print(validateStackSequence(pushed, popped))
+
+pushed = [1, 2, 3, 4, 5, 6]
+popped = [1, 5, 4, 6, 2, 3]
+print(validateStackSequence(pushed, popped))
+root@deepface-19:/data/zhouping/scripts/tmp# 
+
+参考:
+https://www.geeksforgeeks.org/check-if-the-given-push-and-pop-sequences-of-stack-is-valid-or-not/
