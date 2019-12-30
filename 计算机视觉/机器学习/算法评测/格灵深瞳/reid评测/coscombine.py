@@ -11,7 +11,7 @@ import base64
 from optparse import OptionParser
 import os
 
-allFeas = [line.strip().split(" ")[1] for line in open(sys.argv[1]).readlines()]
+allFeas = [line.strip().split(" ")[0] + ':' + line.strip().split(" ")[1] for line in open(sys.argv[1]).readlines()]
 nObj =  open('fea.score',  'w')
 
 def feature2array(feature):
@@ -28,6 +28,9 @@ def feature2array(feature):
 for i in combinations(allFeas, 2):
     vector1, vector2 = i
 
+    img1, vector1 = vector1.split(":")
+    img2, vector2 = vector2.split(":")
+
     vector1 = np.array(feature2array(vector1))
     vector2 = np.array(feature2array(vector2))
     op7=np.dot(vector1,vector2)/(np.linalg.norm(vector1)*(np.linalg.norm(vector2)))
@@ -38,5 +41,5 @@ for i in combinations(allFeas, 2):
     if score < 0:
         score = 0
 
-    nObj.write('{} {} score:{}{}'.format(i[0], i[1], score, os.linesep))
+    nObj.write('{} {} score:{}{}'.format(img1, img2, score, os.linesep))
 nObj.close()
