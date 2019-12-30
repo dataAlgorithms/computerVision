@@ -1,0 +1,92 @@
+1.read file
+>>> with open('afile.txt', 'rt') as at:  
+...     data = at.read()
+... 
+>>> data
+'/home/zhouping/nihao\n/fjdkfjkdjf\nfjdkfjkdjf/home/zhouping\nfjdkjfkdjfk\n'
+>>> 
+>>> with open('afile.txt', 'rt') as at:
+...     for line in at:
+...         print(line)
+... 
+/home/zhouping/nihao
+
+/fjdkfjkdjf
+
+fjdkfjkdjf/home/zhouping
+
+fjdkjfkdjfk
+
+>>> with open('afile.txt', 'rt') as at:
+...     pass
+... 
+>>> with open('afile.txt', 'rt', newline='') as at:   
+...     for line in at:
+...         print(line)
+... 
+/home/zhouping/nihao
+
+/fjdkfjkdjf
+
+fjdkfjkdjf/home/zhouping
+
+fjdkjfkdjfk
+
+>>> with open('afile.txt', 'rt', encoding='ascii', errors='replace') as at:
+...     for line in at:
+...         print(line)
+... 
+/home/zhouping/nihao
+
+/fjdkfjkdjf
+
+fjdkfjkdjf/home/zhouping
+
+fjdkjfkdjfk
+
+>>> with open('afile.txt', 'rt', encoding='ascii', errors='ignore') as at:
+...     for line  in at: 
+...         print(line)
+... 
+/home/zhouping/nihao
+
+/fjdkfjkdjf
+
+fjdkfjkdjf/home/zhouping
+
+fjdkjfkdjfk
+
+>>> 
+>>> 
+
+2.write file
+>>> with open('somefile.txt', 'wt') as w:
+...     w.write("nihao\r\nfjdkfj\r\nfdjfkd\r\n")
+... 
+23
+>>> with open('otherfile.txt', 'wt') as w:
+...     pritn('nihao', w)
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+NameError: name 'pritn' is not defined
+>>> 
+>>> with open('otherfile.txt', 'wt') as w:
+...     print('nihao', file=w)              
+...     print('hello', file=w)
+... 
+>>> exit()
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/fileio# ls
+afile.txt  otherfile.txt  somefile.txt
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/fileio# cat afile.txt 
+/home/zhouping/nihao
+/fjdkfjkdjf
+fjdkfjkdjf/home/zhouping
+fjdkjfkdjfk
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/fileio# cat otherfile.txt 
+nihao
+hello
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/fileio# cat somefile.txt 
+nihao
+fjdkfj
+fdjfkd
