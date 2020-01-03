@@ -64,3 +64,6 @@ if __name__ == '__main__':
     while (len(s) != 0): 
         print(s[-1], end = " ")  
         s.pop() 
+        
+        
+#https://www.geeksforgeeks.org/check-if-stack-elements-are-pairwise-consecutive/
