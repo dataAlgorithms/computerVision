@@ -1,0 +1,13 @@
+>>> with open('afile.txt', 'xt') as f:
+...     f.write('nihao')
+... 
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+FileExistsError: [Errno 17] File exists: 'afile.txt'
+>>> 
+>>> 
+>>> with open('bfile.txt', 'xt') as f:   
+...     f.write('hello')
+... 
+5
+>>> 
