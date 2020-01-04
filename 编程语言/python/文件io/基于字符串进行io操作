@@ -1,0 +1,32 @@
+In [2]: import io
+
+In [3]: s = io.StringIO()
+
+In [5]: s.write('Hello world\n')
+Out[5]: 12
+
+In [6]: print('this is a test', file=s)
+
+In [7]: s
+Out[7]: <_io.StringIO at 0x1ed3618f558>
+
+In [8]: s.getvalue()
+Out[8]: 'Hello world\nthis is a test\n'
+
+In [9]:
+
+In [9]: s = io.StringIO('hello\world\n')
+
+In [10]: s.read(4)
+Out[10]: 'hell'
+
+In [11]: s.read()
+Out[11]: 'o\\world\n'
+
+In [12]: s = io.BytesIO()
+
+In [13]: s.write(b'binary data')
+Out[13]: 11
+
+In [14]: s.getvalue()
+Out[14]: b'binary data'
