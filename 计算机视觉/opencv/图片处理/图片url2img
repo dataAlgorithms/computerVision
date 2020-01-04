@@ -36,3 +36,6 @@ for url in urls:
 
 
 https://www.pyimagesearch.com/2015/03/02/convert-url-to-image-with-python-and-opencv/
+https://upload-images.jianshu.io/upload_images/5201633-159069756c96f07b.jpg?imageMogr2/auto-orient/strip|imageView2/2/w/690/format/webp
+https://gomilkyway.com/misc/how-to-read-an-image-from-url-in-python-3-and-get-the-height-and-width/
+https://stackoverflow.com/questions/7391945/how-do-i-read-image-data-from-a-url-in-python
