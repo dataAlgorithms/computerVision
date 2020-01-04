@@ -1,0 +1,33 @@
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/algoDs# python 1
+('finStr:', 'camonk')
+('finStr:', 'm')
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/algoDs# cat 1
+def removeAdjacentDuplicates(aStr):
+
+    stkptr = -1
+    i = 0
+    lenStr = len(aStr)
+    while i < lenStr:
+        if stkptr == -1 or aStr[stkptr] != aStr[i]:
+            stkptr += 1
+            aStr[stkptr] = aStr[i]
+            i += 1
+        else:
+            while i < lenStr and aStr[stkptr] == aStr[i]:
+                i += 1
+            stkptr -= 1
+
+    aStr[stkptr+1] = None
+    finStr = ''
+    for a in aStr:
+        if a is None:
+            break
+        else:
+            finStr += a
+
+    print('finStr:', finStr)
+
+if __name__ == '__main__':
+    for aStr in ['careermonk', 'mississippi']:
+        removeAdjacentDuplicates(list(aStr))   
+root@ubuntu:/home/zhouping/anaconda3/pyLearn/algoDs# 
