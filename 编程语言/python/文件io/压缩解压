@@ -40,3 +40,8 @@ def decompress(tar_file, path, members=None):
 
 compress("compressed.tar.gz", ["test.txt", "folder"])
 decompress("compressed.tar.gz", "extracted")
+
+'''
+https://code.tutsplus.com/tutorials/compressing-and-extracting-files-in-python--cms-26816
+https://www.cnblogs.com/rockg/articles/11072475.html
+'''
