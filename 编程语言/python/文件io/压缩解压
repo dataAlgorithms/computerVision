@@ -42,6 +42,7 @@ compress("compressed.tar.gz", ["test.txt", "folder"])
 decompress("compressed.tar.gz", "extracted")
 
 '''
+https://www.thepythoncode.com/article/compress-decompress-files-tarfile-python
 https://code.tutsplus.com/tutorials/compressing-and-extracting-files-in-python--cms-26816
 https://www.cnblogs.com/rockg/articles/11072475.html
 '''
