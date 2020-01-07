@@ -1,0 +1,39 @@
+>>> from functools import partial
+>>> RECORD_SIZE = 32
+>>> with open('iterrecord.py', 'rb') as f:
+...     records = iter(partial(f.read, RECORD_SIZE), b'')
+...     for record in records:
+...         print(record)
+... 
+b'The records object in this examp'
+b'le is an iterable that will prod'
+b'uce fixed-sized chunks\nuntil the'
+b' end of the file is reached. How'
+b'ever, be aware that the last ite'
+b'm may have fewer\nbytes than expe'
+b'cted if the file size is not an '
+b'exact multiple of the record siz'
+b'e.\nDiscussion\nA little-known fea'
+b'ture of the iter() function is t'
+b'hat it can create an iterator if'
+b' you pass\nit a callable and a se'
+b'ntinel value. The resulting iter'
+b'ator simply calls the supplied c'
+b'allable\nover and over again unti'
+b'l it returns the sentinel, at wh'
+b'ich point iteration stops.\nIn th'
+b'e solution, the functools.partia'
+b'l is used to create a callable t'
+b'hat reads a fixed\nnumber of byte'
+b's from a file each time it\xe2\x80\x99s c'
+b"alled. The sentinel of b'' is wh"
+b'at gets returned\nwhen a file is '
+b'read but the end of file has bee'
+b'n reached.\nLast, but not least, '
+b'the solution shows the file bein'
+b'g opened in binary mode. For rea'
+b'ding\nfixed-sized records, this w'
+b'ould probably be the most common'
+b' case. For text files, reading\nl'
+b'ine by line (the default iterati'
+b'on behavior) is more common.\n'
