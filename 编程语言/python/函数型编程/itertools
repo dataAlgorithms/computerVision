@@ -1,0 +1,425 @@
+https://www.jianshu.com/p/73b17486ef8c
+
+ITERTOOLS模块小结
+
+kivinsae
+2019.01.03 18:18:20
+字数 2,046
+阅读 576
+ITERTOOLS是一个高效循环的迭代函数集合。正好在最近的应用的时候用的比较多，网上几个比较详细的介绍帖子要么写的抽象，要么例子不够简洁。就大概整理了一下，搬运成分偏少。反正不重复造轮子是一个比较pythonic的原则，所以有空就分享一下。不过个人推荐有空还是可以看一下这些内建函数本身的实现源码，都非常简洁。
+
+以及，这东西遇到某些没有限制的leetcode题目不就是秒杀吗，更别说生产环境的很多小数据处理需求了。做码农不偷懒那还是人吗。
+
+一、组成
+itertools主要来分为三类函数，分别为无限迭代器、输入序列迭代器、组合生成器，我们下面开始具体讲解。
+
+二、无限迭代器
+1、Itertools.count(start=0, step=1)
+创建一个迭代对象，生成从start开始的连续整数，步长为step。
+如果省略了start则默认从0开始，步长默认为1
+如果超过了sys.maxint，则会移除并且从-sys.maxint-1开始计数。
+
+    例：
+    from itertools import *
+    for i in izip(count(2,6), ['a', 'b', 'c']):
+    print i
+    输出为：
+    (2, 'a')
+    (8, 'b')
+    (14, 'c')
+2、Itertools.cycle(iterable)
+创建一个迭代对象，对于输入的iterable的元素反复执行循环操作，内部生成iterable中的元素的一个副本，这个副本用来返回循环中的重复项。
+
+    例：
+    from itertools import *
+    i = 0
+    for item in cycle(['a', 'b', 'c']):
+        i += 1
+        if i == 10:
+            break
+        print (i, item)
+    输出为：
+    (1, 'a')
+    (2, 'b')
+    (3, 'c')
+    (4, 'a')    
+    (5, 'b')
+    (6, 'c')
+    (7, 'a')
+    (8, 'b')
+    (9, 'c')
+3、Itertools.repeat(object[, times])
+创建一个迭代器，重复生成object，如果没有设置times，则会无线生成对象。
+
+    例：
+    from itertools import *
+    for i in repeat('kivinsae', 5):
+        print I
+    输出为：
+    kivinsae
+    kivinsae
+    kivinsae
+    kivinsae
+    kivinsae
+三、输入序列迭代器
+0、itertools.accumulate(*iterables)
+这个函数简单来说就是一个累加器，不停对列表或者迭代器进行累加操作（这里指每项累加）。
+
+ 例：
+    from itertools import *
+    x = itertools.accumulate(range(10))
+    print(list(x))
+    输出为：
+    [0, 1, 3, 6, 10, 15, 21, 28, 36, 45]
+1、itertools.chain(*iterables)
+把多个迭代器作为参数，但是只会返回单个迭代器。产生所有参数迭代器的内容，却好似来自于一个单一的序列。简单了讲就是连接多个【列表】或者【迭代器】。
+
+    例：
+    from itertools import *
+    for i in chain(['p','x','e'], ['scp', 'nmb', 'balenciaga']):
+        print I
+    输出为：
+    p
+    x
+    e
+    scp
+    nmb
+    balenciaga
+2、itertools.compress(data,selectors)
+具体来说compress提供了一个对于原始数据的筛选功能，具体条件可以设置的非常复杂，所以下面只列出相关的定义代码来解释。不过简单来理解，就是说按照真值表进行元素筛选而已。
+
+    实现过程：
+    def compress(data, selectors):
+        # compress('ABCDEF', [1,0,1,0,1,1]) --> A C E F
+        return (d for d, s in izip(data, selectors) if s)    
+
+    例：
+    from itertools import compress
+    list(compress('ABCDEF', [1, 1, 0, 1, 0, 1]))
+    输出为：
+    ['A', 'B', 'D', 'F']
+3、itertools.dropwhile(predicate,iterable)
+dropwhile作用是创建一个迭代器，只要是函数predicate(item)为True，则丢掉iterable中的项，但是如果predicate返回的是False，则生成iterable中的项和所有的后续项。
+具体来说就是，在条件为False之后的第一次，就返回迭代器中剩余的所有项。在这个函数表达式里面iterable的值会按索引一个个作为predicate的参数进行计算。
+简单来说其实就是按照真值函数丢弃掉列表和迭代器前面的元素。
+
+    例：
+    from itertools import *
+    def should_drop(x):
+        print 'Testing:', x
+        return (x<1)
+    for i in dropwhile(should_drop, [ -1, 0, 1, 2, 3, 4, 1, -2 ]):
+        print 'Yielding:', i
+    输出为：
+    Testing: -1
+    Testing: 0
+    Testing: 1
+    Yielding: 1
+    Yielding: 2
+    Yielding: 3
+    Yielding: 4
+    Yielding: 1
+    Yielding: -2
+4、itertools.groupby(iterable[,key])
+返回一个集合的迭代器，集合内是按照key进行分组后的值。
+如果iterable在多次连续的迭代中生成了同一项，则会定义一个组，如果对这个函数应用一个分类列表，那么分组会定义这个列表中所有的唯一项，key是一个函数并应用于每一项。如果这个函数有返回值，则这个值会用于后续的项，而不是和该项本身进行比较。这个函数返回的迭代器生成元素(key,group)，key是分组的键值，group是迭代器，从而生成组成这个组的所有项目。
+具体来说实现过程和示例如下：
+
+    实现过程：
+    class groupby(object):
+        # [k for k, g in groupby('AAAABBBCCDAABBB')] --> A B C D A B
+        # [list(g) for k, g in groupby('AAAABBBCCD')] --> AAAA BBB CC D
+        def __init__(self, iterable, key=None):
+            if key is None:
+                key = lambda x: x
+            self.keyfunc = key
+            self.it = iter(iterable)
+            self.tgtkey = self.currkey = self.currvalue = object()
+        def __iter__(self):
+            return self
+        def next(self):
+            while self.currkey == self.tgtkey:
+                self.currvalue = next(self.it)    # Exit on StopIteration
+                self.currkey = self.keyfunc(self.currvalue)
+            self.tgtkey = self.currkey
+            return (self.currkey, self._grouper(self.tgtkey))
+        def _grouper(self, tgtkey):
+            while self.currkey == tgtkey:
+                yield self.currvalue
+                self.currvalue = next(self.it)    # Exit on StopIteration
+                self.currkey = self.keyfunc(self.currvalue)
+
+    例：
+    from itertools import *
+    a = ['aa', 'ab', 'abc', 'bcd', 'abcde']
+    for i, k in groupby(a, len):
+        print i, list(k)
+    输出为：
+    2 ['aa', 'ab']
+    3 ['abc', 'bcd']
+    5 ['abcde']
+5、itertools.ifilter(predicate,iterable)
+本函数返回一个迭代器，类似于针对于列表的函数filter()，但是只包括测试函数返回True时候的值。和dropwhile()作用不同。
+函数创建一个迭代器，只生成predicate(iterable)为True的项，简单来说就是返回iterable中所有计算后为True的项。如果是非True则进行之后的其他操作。
+
+    例：
+    from itertools import *
+    def check_item(x):
+        print 'Testing:', x
+        return (x<1)
+    for i in ifilter(check_item, [ -1, 0, 1, 2, 3, 4, 1, -2 ]):
+        print 'Yielding:', i
+    输出为：
+    Testing: -1
+    Yielding: -1
+    Testing: 0
+    Yielding: 0
+    Testing: 1
+    Testing: 2
+    Testing: 3
+    Testing: 4
+    Testing: 1
+    Testing: -2
+    Yielding: -2
+6、itertools.ifilterfalse(predicate,iterable)
+本函数和上面的ifilter一样，唯一的区别是只有当predicate(iterable)为False时候才进行predicate的输出。
+
+    例：
+    from itertools import *
+    def check_item(x):
+        print 'Testing:', x
+        return (x<1)
+    for i in ifilterfalse(check_item, [ -1, 0, 1, 2, 3, 4, 1, -2 ]):
+        print 'Yielding:', I
+    输出为：
+    Testing: -1
+    Testing: 0
+    Testing: 1
+    Yielding: 1
+    Testing: 2
+    Yielding: 2
+    Testing: 3
+    Yielding: 3
+    Testing: 4
+    Yielding: 4
+    Testing: 1
+    Yielding: 1
+    Testing: -2
+7、itertools.islice(iterable,stop)
+简单来说这个函数，就是对于一个迭代对象iterable，设定一个特定的切片/选取/截取规则，然后最后输出一个特定的新的迭代对象的过程。这个stop实际上代表一个三元数组，也就是start，stop，step。如果start省略，默认从索引0开始；如果step被省略，则默认步长为1；stop不能被省略。本质就是一个切片工具。
+
+    例：
+    from itertools import *
+    print 'Stop at 5:'
+    for i in islice(count(), 5):
+        print i
+    
+    print 'Start at 5, Stop at 10:'
+    for i in islice(count(), 5, 10):
+        print i
+    print 'By tens to 100:'
+    for i in islice(count(), 0, 100, 10):
+        print I
+    输出为：
+    Stop at 5:
+    0
+    1
+    2
+    3
+    4
+    Start at 5, Stop at 10:
+    5
+    6
+    7
+    8
+    9
+    By tens to 100:
+    0
+    10
+    20
+    30
+    40
+    50
+    60
+    70
+    80
+    90
+8、itertools.imap(function,*iterable)
+本函数创建一个迭代器，作用函数为function1，function2，function3…，对应的变量来自迭代器iterable1，iterable2，iterable3…。然后返回一个(f1,f2,f3…)形式的元组。只要其中一个迭代器不再生成值，这个函数就会停止。所以要处理好None的情况，用一下替代输出之类的方法。
+
+    例：
+    from itertools import *
+    print 'Doubles:'
+    for i in imap(lambda x:2*x, xrange(5)):
+        print i
+    print 'Multiples:'
+    for i in imap(lambda x,y:(x, y, x*y), xrange(5), xrange(5,10)):
+        print '%d * %d = %d' % I
+    输出为：
+    Doubles:
+    0
+    2
+    4
+    6
+    8
+    Multiples:
+    0 * 5 = 0
+    1 * 6 = 6
+    2 * 7 = 14
+    3 * 8 = 24
+    4 * 9 = 36
+9、itertools.starmap(function,iterable)
+本函数创建一个函数，其中内调用的function(*item)，item来自于iterable。只有当迭代对象iterable生成的项适合这个函数的调用形式的时候，starmap才会有效。
+
+    例：
+    from itertools import *
+    values = [(0, 5), (1, 6), (2, 7), (3, 8), (4, 9)]
+    for i in starmap(lambda x,y:(x, y, x*y), values):
+        print '%d * %d = %d' % I
+    输出为：
+    0 * 5 = 0
+    1 * 6 = 6
+    2 * 7 = 14
+    3 * 8 = 24
+    4 * 9 = 36
+10、itertools.tee(iterable[,n=2])
+这个函数会返回若干个基于某个原始输入的独立迭代器。类似于Linux系统上的tee指令。如果不特地制定n的话，函数会默认是2。tee括号里面最好使用标准输入，而不是原始迭代器。不然会在某些缓存过程中出现异常。
+
+    例：
+    from itertools import *
+    r = islice(count(), 5)
+    i1, i2 = tee(r)
+    for i in i1:
+        print 'i1:', i
+    for i in i2:
+        print 'i2:', I
+    输出为：
+    i1: 0
+    i1: 1
+    i1: 2
+    i1: 3
+    i1: 4
+    i2: 0
+    i2: 1
+    i2: 2
+    i2: 3
+    i2: 4
+11、itertools.takewhile(predicate,iterable)
+这个函数和dropwhile刚好相反，只要predicate计算后为False，迭代过程立刻停止。
+
+    例：
+    from itertools import *
+    def should_take(x):
+        print 'Testing:', x
+        return (x<2)
+    for i in takewhile(should_take, [ -1, 0, 1, 2, 3, 4, 1, -2 ]):
+        print 'Yielding:', I
+    输出为：
+    Testing: -1
+    Yielding: -1
+    Testing: 0
+    Yielding: 0
+    Testing: 1
+    Yielding: 1
+    Testing: 2
+12、itertools.izip( *iterables)
+这个函数返回一个合并多个迭代器，成为一个元组的迭代对象。类似于内置函数zip，但返回的是迭代对象而非列表。
+创建一个迭代对象，生成元组(i1,i2,i3…)分别来自于i1,i2,i3…，只要提供的某个迭代器不在生成值，函数就会立刻停止。
+
+    例：
+    from itertools import *
+    for i in izip([1, 2, 3], ['a', 'b', 'c']):
+        print I
+    输出为：
+    (1, 'a')
+    (2, 'b')
+    (3, 'c')
+13、itertools.izip_longest(*iterable[,fillvalue])
+本函数和izip雷同，但是区别在于不会停止，会把所有输入的迭代对象全部耗尽为止，对于参数不匹配的项，会用None代替。非常容易理解。
+
+    例：
+    from itertools import *
+    for i in izip_longest([1, 2, 3], ['a', 'b']):
+        print I
+    输出为：
+    (1, 'a')
+    (2, 'b')
+    (3, None)
+四、组合生成器
+1、itertools.product(*iterable[,repeat])
+这个工具就是产生多个列表或者迭代器的n维积。如果没有特别指定repeat默认为列表和迭代器的数量。
+
+    例：
+    import itertools
+    a = (1, 2, 3)
+    b = ('A', 'B', 'C')
+    c = itertools.product(a,b)
+    for elem in c:
+        print elem
+    输出为：
+    (1, 'A')
+    (1, 'B')
+    (1, 'C')
+    (2, 'A')
+    (2, 'B')
+    (2, 'C')
+    (3, 'A')
+    (3, 'B')
+    (3, 'C')
+2、itertools.permutations(iterable[,r])
+这个函数作用其实就是产生指定数目repeat的元素的所有排列，且顺序有关，但是遇到原列表或者迭代器有重复元素的现象的时候，也会对应的产生重复项。这个时候最好用groupby或者其他filter去一下重，如果有需要的话。
+
+    例：
+    import itertools
+    x = itertools.permutations(range(4), 3)
+    print(list(x))
+    输出为：
+    [(0, 1, 2), 
+    (0, 1, 3), 
+    (0, 2, 1), 
+    (0, 2, 3), 
+    (0, 3, 1), 
+    (0, 3, 2), 
+    (1, 0, 2), 
+    (1, 0, 3), 
+    (1, 2, 0), 
+    (1, 2, 3), 
+    (1, 3, 0), 
+    (1, 3, 2), 
+    (2, 0, 1), 
+    (2, 0, 3), 
+    (2, 1, 0), 
+    (2, 1, 3), 
+    (2, 3, 0), 
+    (2, 3, 1), 
+    (3, 0, 1),
+    (3, 0, 2), 
+    (3, 1, 0), 
+    (3, 1, 2), 
+    (3, 2, 0), 
+    (3, 2, 1)
+    ]
+3、itertools.combinations(iterable,r)
+这个函数用来生成指定数目r的元素不重复的所有组合。注意和permutation的区分，以及这个组合是无序的，只考虑元素本身的unique性。
+
+    例：
+    import itertools
+    x = itertools.combinations(range(4), 3)
+    print(list(x))
+    输出为：
+    [(0, 1, 2), (0, 1, 3), (0, 2, 3), (1, 2, 3)]
+4、itertools.combinations_with_replacement(iterable,r)
+这个函数用来生成指定数目r的元素可重复的所有组合。然而这个函数依然要保证元素组合的unique性。
+
+    例：
+    import itertools
+    x = itertools.combinations_with_replacement('ABC', 2)
+    print(list(x))
+    输出为：
+    [('A', 'A'), 
+    ('A', 'B'), 
+    ('A', 'C'), 
+    ('B', 'B'), 
+    ('B', 'C'), 
+    ('C', 'C’)
+    ]
