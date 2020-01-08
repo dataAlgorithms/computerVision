@@ -1,0 +1,48 @@
+root@ubuntu1604:/data/zhouping/scripts/pylearn# python3 readinfo.py 
+buf: bytearray(b'Hello World')
+buf: bytearray(b'Hallo World')
+n: 32
+buf: bytearray(b'fffff\nffffff\nkkkkkk\nfj\nfdfjdkf\nf')
+m2: <memory at 0x7f7654736048>
+buf: bytearray(b'fffff\nffffff\nkkkkkk\nfj\nfdfjWORLD')
+root@ubuntu1604:/data/zhouping/scripts/pylearn# cat readinfo.py 
+import os.path
+
+# read info
+def read_into_buffer(filename):
+    buf = bytearray(os.path.getsize(filename))
+
+    with open(filename, 'rb') as f:
+        f.readinto(buf)
+    return buf
+
+with open('sample.bin', 'wb') as f:
+    f.write(b'Hello World')
+
+buf = read_into_buffer('sample.bin')
+print('buf:', buf)
+
+buf[0:5] = b'Hallo'
+print('buf:', buf)
+
+with open('newsample.bin', 'wb') as f:
+    f.write(buf)
+
+record_size = 32 # Size of each record (adjust value)
+buf = bytearray(record_size)
+with open('somefile', 'rb') as f:
+    while True:
+        n = f.readinto(buf)
+        if n < record_size:
+            break
+        print('n:', n)
+
+print('buf:', buf)
+
+m1 = memoryview(buf)
+m2 = m1[-5:]
+print('m2:', m2)
+
+m2[:] = b'WORLD'
+print('buf:', buf)
+root@ubuntu1604:/data/zhouping/scripts/pylearn# 
