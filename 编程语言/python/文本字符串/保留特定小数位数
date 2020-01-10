@@ -23,3 +23,11 @@ Out[10]: '1627731.000'
 
 In [13]: 'value is {:0.3f}'.format(a)
 Out[13]: 'value is 1627731.000'
+
+精确：
+from _pydecimal import Decimal, Context, ROUND_HALF_UP
+
+def myround(mynum, bitnum):
+    return float(Context(prec=bitnum, rounding=ROUND_HALF_UP).create_decimal(str(mynum)))
+    
+    
