@@ -1,0 +1,12 @@
+>>> import os
+>>> os.path.basename('/home/zp/nihao.txt')
+'nihao.txt'
+>>> os.path.dirname('/home/zp/nihao.txt') 
+'/home/zp'
+>>> os.path.join('home', 'dell', 'nihao.txt')
+'home/dell/nihao.txt'
+>>> os.path.expanduser('~/home/nihao.txt')
+'/root/home/nihao.txt'
+>>> os.path.splitext('/home/dell/nihao.txt')
+('/home/dell/nihao', '.txt')
+>>> 
