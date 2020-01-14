@@ -1,0 +1,18 @@
+>>> import os
+>>> os.path.exists('a.jpg')
+True
+>>> os.path.isfile('a.jpg')
+True
+>>> os.path.islink('a.jpg')
+False
+>>> os.path.isdir('a.jpg')      
+False
+>>> os.path.getsize('a.jpg')
+338719
+>>> os.path.getmtime('a.jpg')
+1576839337.1729786
+>>> 
+>>> import time
+>>> time.ctime(os.path.getmtime('/etc/passwd'))
+'Thu Dec 26 19:06:00 2019'
+>>> 
