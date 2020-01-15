@@ -53,3 +53,10 @@ def getPipeline(cName):
 
 if __name__ == '__main__':
     getPipeline(cName)
+
+6.surrogates not allowed
+>>> b'C\xc3N'.decode('utf8','surrogateescape')
+'C\udcc3N'
+>>> b'C\xc3N'.decode('utf8','surrogateescape').encode('utf8','surrogateescape')
+b'C\xc3N'
+https://stackoverflow.com/questions/27366479/python-3-os-walk-file-paths-unicodeencodeerror-utf-8-codec-cant-encode-s
