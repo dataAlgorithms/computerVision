@@ -1,0 +1,38 @@
+1.获取特定目录下第一层的文件及文件夹
+>>> import os
+>>> names = [name for name in os.listdir('aiReview') if os.path.isfile(os.path.join('aiReview', name))]
+>>> names
+['copy.py']
+>>> os.listdir('aiReview')
+['copy.py', 'xinyu', 'imgPri', 'badcase']
+>>> names = [name for name in os.listdir('aiReview') if os.path.isdir(os.path.join('aiReview', name))]      
+>>> names
+['xinyu', 'imgPri', 'badcase']
+
+2.获取特定目录下第一层的py文件
+>>> pyfiles = [name for name in os.listdir('aiReview') if name.endswith('.py')]
+>>> pyfiles
+['copy.py']
+>>> import glob
+>>> glob.glob('aiReview/*.py')
+['aiReview/copy.py']
+
+3.获取特定目录下所有的py文件
+>>> import fnmatch
+>>> 
+>>> def findAllFiles(dirname=None, pattern="*.jpg"):
+...     for root, dirs, filenames in os.walk(dirname):
+...         for name in fnmatch.filter(filenames, pattern):
+...             yield os.path.join(root, name)
+... 
+>>> llPyes = findAllFiles('aiReview', '*.py')
+>>> 
+>>> for name in llPyes:
+...     print(name)
+... 
+aiReview/copy.py
+aiReview/xinyu/imgsplit.py
+aiReview/badcase/imgsplit.py
+
+备注:
+如果要所有文件,可以将*.py改成*.*
