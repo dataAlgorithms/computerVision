@@ -1,0 +1,20 @@
+>>> import os
+>>> import sys
+>>> for name in os.listdir("."):
+...     try:
+...         print(name)
+...     except:
+...         print(bad_filename(name))
+... 
+reidAi.result.turing
+reidAi.result.pascal
+abc.txt
+accReid.py
+results.lst.0773
+objectVehicle
+results.lst.07731
+results.lst.077
+labelReid
+q_list
+>>> 
+>>> 
