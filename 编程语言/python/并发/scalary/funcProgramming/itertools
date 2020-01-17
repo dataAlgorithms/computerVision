@@ -1,1 +1,12 @@
-
+1.zip_longest
+>>> import itertools as it
+>>> 
+>>> def grouper(inputs, n, fillvalue=None):
+...     iters = [iter(inputs)] * n
+...     return it.zip_longest(*iters, fillvalue=fillvalue)
+... 
+>>> 
+>>> grouper([1, 2, 3, 4, 5, 6], 3)
+<itertools.zip_longest object at 0x7f25b481c318>
+>>> list(grouper([1, 2, 3, 4, 5, 6], 3))
+[(1, 2, 3), (4, 5, 6)]
