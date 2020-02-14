@@ -1,0 +1,31 @@
+In [8]: %paste
+def recv(maxsize, *, block):
+    'Receives a message'
+    pass
+
+recv(1024, block=True)
+recv(1024, True)
+## -- End pasted text --
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-8-bb63e1507c48> in <module>()
+      4
+      5 recv(1024, block=True)
+----> 6 recv(1024, True)
+
+TypeError: recv() takes 1 positional argument but 2 were given
+
+In [9]: %paste
+def minimum(*values, clip=None):
+    m = min(values)
+    if clip is not None:
+        m = clip if clip > m else m
+    return m
+
+minimum(1, 5, 2, -5, 10)
+
+## -- End pasted text --
+Out[9]: -5
+
+In [10]: minimum(1, 5, 2, -5, 10, clip=0)
+Out[10]: 0
