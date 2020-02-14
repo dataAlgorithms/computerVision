@@ -31,3 +31,102 @@ if __name__ == '__main__':
     print('max is:', findMax(root))
     
 二.迭代法
+# Python program find maximum and minimum element 
+from sys import maxsize 
+  
+INT_MAX = maxsize 
+INT_MIN = -maxsize 
+  
+# A Tree node 
+class Node: 
+    def __init__(self, key): 
+        self.key = key 
+        self.left = None
+        self.right = None
+  
+# Function to print a maximum and minimum element 
+# in a tree without recursion without stack 
+def printMinMax(root: Node): 
+    if root is None: 
+        print("Tree is empty") 
+        return
+  
+    current = root 
+    pre = Node(0) 
+  
+    # Max variable for storing maximum value 
+    max_value = INT_MIN 
+  
+    # Min variable for storing minimum value 
+    min_value = INT_MAX 
+  
+    while current is not None: 
+  
+        # If left child does nor exists 
+        if current.left is None: 
+            max_value = max(max_value, current.key) 
+            min_value = min(min_value, current.key) 
+  
+            current = current.right 
+        else: 
+  
+            # Find the inorder predecessor of current 
+            pre = current.left 
+            while pre.right is not None and pre.right != current: 
+                pre = pre.right 
+  
+            # Make current as the right child 
+            # of its inorder predecessor 
+            if pre.right is None: 
+                pre.right = current 
+                current = current.left 
+  
+            # Revert the changes made in the 'if' part to 
+            # restore the original tree i.e., fix the 
+            # right child of predecessor 
+            else: 
+                pre.right = None
+                max_value = max(max_value, current.key) 
+                min_value = min(min_value, current.key) 
+  
+                current = current.right 
+  
+            # End of if condition pre->right == NULL 
+  
+        # End of if condition current->left == NULL 
+  
+    # End of while 
+  
+    # Finally print max and min value 
+    print("Max value is :", max_value) 
+    print("Min value is :", min_value) 
+  
+# Driver Code 
+if __name__ == "__main__": 
+  
+    # /* 15 
+    # / \ 
+    # 19 11 
+    #     / \ 
+    # 25 5 
+    # / \ / \ 
+    # 17 3 23 24 
+  
+    # Let us create Binary Tree as shown 
+    # above */ 
+  
+    root = Node(15) 
+    root.left = Node(19) 
+    root.right = Node(11) 
+  
+    root.right.left = Node(25) 
+    root.right.right = Node(5) 
+  
+    root.right.left.left = Node(17) 
+    root.right.left.right = Node(3) 
+    root.right.right.left = Node(23) 
+    root.right.right.right = Node(24) 
+  
+    # Function call for printing a max 
+    # and min element in a tree 
+    printMinMax(root) 
