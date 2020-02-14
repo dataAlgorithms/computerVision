@@ -1,0 +1,33 @@
+一.递归法
+class NewNode:
+    def __init__(self, data):
+        self.data = data
+        self.left = self.right = None
+
+def findMax(root):
+    # base case
+    if root is None:
+        return -99999999999
+
+    res = root.data
+    lres = findMax(root.left)
+    rres = findMax(root.right)
+    if lres > res:
+        res = lres
+    if rres > res:
+        res = rres
+
+    return res
+
+if __name__ == '__main__':
+    root = NewNode(2)
+    root.left = NewNode(7)
+    root.right = NewNode(5)
+    root.left.right = NewNode(6)
+    root.left.right.left = NewNode(1)
+    root.left.right.right = NewNode(11)
+    root.right.right = NewNode(9)
+    root.right.right.left = NewNode(4)
+    print('max is:', findMax(root))
+    
+二.迭代法
