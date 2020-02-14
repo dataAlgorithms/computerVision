@@ -1,0 +1,55 @@
+In [1]: %paste
+def avg(first, *rest):
+    return (first + sum(rest)) / (1 + len(rest))
+## -- End pasted text --
+
+In [2]: avg(1, 2)
+Out[2]: 1.5
+
+In [3]: avg(1, 2, 3, 4)
+Out[3]: 2.5
+
+In [4]: %paste
+import html
+
+def make_element(name, value, **attrs):
+    keyvals = [' %s="%s"' % item for item in attrs.items()]
+    attr_str = ''.join(keyvals)
+    element = '<{name}{attrs}>{value}</{name}>'.format(
+                  name=name,
+                  attrs=attr_str,
+                  value=html.escape(value))
+    return element
+
+## -- End pasted text --
+
+In [5]: make_element('item', 'Albatross', size='large', quantity=6)
+Out[5]: '<item size="large" quantity="6">Albatross</item>'
+
+In [6]: make_element('p', '<spam>')
+Out[6]: '<p>&lt;spam&gt;</p>'
+
+In [7]: %paste
+import html
+
+def make_element(name, value, **attrs):
+    keyvals = [' %s="%s"' % item for item in attrs.items()]
+    print(keyvals)
+    attr_str = ''.join(keyvals)
+    print(attr_str)
+    element = '<{name}{attrs}>{value}</{name}>'.format(
+                  name=name,
+                  attrs=attr_str,
+                  value=html.escape(value))
+    return element
+
+make_element('item', 'Albatross', size='large', quantity=6)
+
+## -- End pasted text --
+[' size="large"', ' quantity="6"']
+ size="large" quantity="6"
+Out[7]: '<item size="large" quantity="6">Albatross</item>'
+
+def anyargs(*args, **kwargs):
+    print(args)   # tuple
+    print(kwargs) # dict
