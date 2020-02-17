@@ -1,0 +1,64 @@
+In [13]: x = 10
+
+In [14]: a = lambda y: x + y
+
+In [15]: a
+Out[15]: <function __main__.<lambda>>
+
+In [16]: x = 20
+
+In [17]: b = lambda y: x + y
+
+In [18]: a(10)
+Out[18]: 30
+
+In [19]: b(10)
+Out[19]: 30
+
+In [20]: x = 15
+
+In [21]: a(10)
+Out[21]: 25
+
+In [22]: x = 3
+
+In [23]: a(10)
+Out[23]: 13
+
+In [24]: x = 10
+
+In [25]: a = lambda y, x=x: x + y
+
+In [26]: x = 20
+
+In [27]: b = lambda y, x=x: x + y
+
+In [28]: a(10)
+Out[28]: 20
+
+In [29]: b(10)
+Out[29]: 30
+
+In [30]: funcs = [lambda x: x+n for n in range(5)]
+
+In [31]: for f in funcs:
+    ...:     print(f(0))
+    ...:
+4
+4
+4
+4
+4
+
+In [32]: funcs = [lambda x, n=n: x+n for n in range(5)]
+
+In [33]: for f in funcs:
+    ...:     print(f(0))
+    ...:
+0
+1
+2
+3
+4
+
+In [34]:
