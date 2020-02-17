@@ -1,0 +1,12 @@
+In [1]: def add(x:int, y:int) -> int:
+   ...:     return x + y
+   ...:
+
+In [2]: help(add)
+Help on function add in module __main__:
+
+add(x:int, y:int) -> int
+
+
+In [3]: add.__annotations__
+Out[3]: {'return': int, 'x': int, 'y': int}
