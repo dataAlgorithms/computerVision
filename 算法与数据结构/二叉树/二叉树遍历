@@ -69,3 +69,5 @@ printInorder(root)
   
 print ("\nPostorder traversal of binary tree is")
 printPostorder(root) 
+
+https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/
