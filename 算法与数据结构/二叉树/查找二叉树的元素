@@ -1,0 +1,136 @@
+方法1: Iterative level order
+# Iterative level order traversal based 
+# method to search in Binary Tree  
+  
+# importing Queue 
+from queue import Queue 
+  
+# Helper function that allocates a  
+# new node with the given data and  
+# None left and right pointers. 
+class newNode: 
+    def __init__(self, data):  
+        self.data = data  
+        self.left = self.right = None
+  
+# An iterative process to search an 
+# element x in a given binary tree  
+def iterativeSearch(root, x): 
+      
+    # Base Case  
+    if (root == None): 
+        return False
+  
+    # Create an empty queue for level 
+    # order traversal  
+    q = Queue()  
+  
+    # Enqueue Root and initialize height  
+    q.put(root)  
+  
+    # Queue based level order traversal  
+    while (q.empty() == False): 
+          
+        # See if current node is same as x  
+        node = q.queue[0]  
+        if (node.data == x):  
+            return True
+  
+        # Remove current node and  
+        # enqueue its children  
+        q.get() 
+        if (node.left != None): 
+            q.put(node.left)  
+        if (node.right != None): 
+            q.put(node.right) 
+  
+    return False
+  
+# Driver Code 
+if __name__ == '__main__': 
+  
+    root = newNode(2)  
+    root.left = newNode(7)  
+    root.right = newNode(5)  
+    root.left.right = newNode(6)  
+    root.left.right.left = newNode(1)  
+    root.left.right.right = newNode(11)  
+    root.right.right = newNode(9)  
+    root.right.right.left = newNode(4)  
+  
+    if iterativeSearch(root, 6): 
+        print("Found") 
+    else: 
+        print("Not Found")  
+    if iterativeSearch(root, 12): 
+        print("Found") 
+    else: 
+        print("Not Found") 
+        
+方法2:Iterative Preorder Traversal
+# An iterative Python3 code to search  
+# an item in Binary Tree 
+  
+''' A binary tree node has data,  
+left child and right child '''
+class newNode:  
+  
+    # Construct to create a newNode  
+    def __init__(self, key):  
+        self.data = key  
+        self.left = None
+        self.right = None
+  
+# iterative process to search an element x  
+# in a given binary tree 
+def iterativeSearch(root,x): 
+      
+    # Base Case 
+    if (root == None): 
+        return False
+      
+    # Create an empty stack and  
+    # append root to it 
+    nodeStack = [] 
+    nodeStack.append(root) 
+      
+    # Do iterative preorder traversal to search x 
+    while (len(nodeStack)): 
+          
+        # See the top item from stack and  
+        # check if it is same as x 
+        node = nodeStack[0] 
+        if (node.data == x): 
+            return True
+        nodeStack.pop(0) 
+          
+        # append right and left children  
+        # of the popped node to stack 
+        if (node.right): 
+            nodeStack.append(node.right) 
+        if (node.left): 
+            nodeStack.append(node.left) 
+      
+    return False
+  
+# Driver Code 
+root = newNode(2) 
+root.left = newNode(7) 
+root.right = newNode(5) 
+root.left.right = newNode(6) 
+root.left.right.left = newNode(1) 
+root.left.right.right = newNode(11) 
+root.right.right = newNode(9) 
+root.right.right.left = newNode(4) 
+  
+if iterativeSearch(root, 6): 
+    print("Found") 
+else:  
+    print("Not Found") 
+      
+if iterativeSearch(root, 12): 
+    print("Found") 
+else:  
+    print("Not Found") 
+    
+https://www.geeksforgeeks.org/iterative-search-for-a-key-x-in-binary-tree/
