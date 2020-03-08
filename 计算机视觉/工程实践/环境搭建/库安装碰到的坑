@@ -1,0 +1,4 @@
+1.踩过的坑 之 tqdm_notebook 报错 NameError: name 'IntProgress' is not defined
+pip install ipywidgets
+详情:
+https://blog.csdn.net/vola9527/article/details/79875022
