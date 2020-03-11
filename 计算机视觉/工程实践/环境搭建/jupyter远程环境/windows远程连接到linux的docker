@@ -1,0 +1,36 @@
+1、在服务器上Docker容器里安装好ipython,jupyter notebook
+pip install IPython
+pip install urllib3
+pip install jupyter
+
+2、生成配置文件(if indocker must use `--alloww-root`)
+jupyter notebook --allow-root--generate-config
+
+3、生成密码
+打开ipython, 创建一个密文密码
+In [1]: from notebook.auth import passwd
+In [2]: passwd()
+Enter password:
+Verify password:
+Out[2]: 'sha1:ce23d945972f:34769685a7ccd3d08c84a18c63968a41f1140274'
+
+
+把生成的密文‘sha:ce…’复制下来
+
+4、修改默认配置文件
+vim ~/.jupyter/jupyter_notebook_config.py
+
+c.NotebookApp.ip='*' # 就是设置所有ip皆可访问
+c.NotebookApp.password =u'sha:ce...刚才复制的那个密文'（如果步骤2忽略，只添加这一行即可）
+c.NotebookApp.open_browser = False # 禁止自动打开浏览器
+c.NotebookApp.port =8888 #随便指定一个端口
+
+5、切换到home目录下!!! 然后启动jupyter notebook(因为是在docker中root下运行的话需要加上 `--alloww-root`)
+jupyter notebook --allow-root
+
+6、切换到Windows下，打开浏览器输入，IP（服务器IP）:port（服务器映射到容器的端口） 
+
+注意:
+这里的端口8888是docker里面的内部端口
+我们在启动docker的时候，需要让docker外面可以访问到，如下：
+docker run -it --rm --runtime=nvidia  -p 8888:8888 -v /$(pwd)/notebooks:/notebooks tensorflow/tensorflow:latest-gpu-py3 python  （服务器上运行)
