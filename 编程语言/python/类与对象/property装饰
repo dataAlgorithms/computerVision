@@ -79,3 +79,30 @@ Out[38]: 50.26548245743669
 
 In [39]: c.perimeter
 Out[39]: 25.132741228718345
+
+3.property函数
+class Student:
+    def __init__(self):
+        self._age = None
+
+    def get_age(self):
+        print('get:')
+        return self._age
+
+    def set_age(self, age):
+        print('set:')
+        self._age = age
+
+    def del_age(self):
+        print('del:')
+        del self._age
+
+    age = property(get_age, set_age, del_age, '学生年龄')
+
+student = Student()
+print('help：' + Student.age.__doc__)
+
+student.age = 18
+print('age：' + str(student.age))
+
+del student.age
