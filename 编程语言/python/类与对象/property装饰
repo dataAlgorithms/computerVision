@@ -1,4 +1,4 @@
-1.读取赋值限制
+1.读取赋值限制(propery装饰)
 class Person:
     def __init__(self, first_name):
         self.first_name = first_name
@@ -55,7 +55,7 @@ AttributeError                            Traceback (most recent call last)
 
 AttributeError: Cannot delete  attribute
 
-2.赋值时有运算
+2.赋值时有运算(propery装饰)
 import math
 class Circle:
     def __init__(self, radius):
