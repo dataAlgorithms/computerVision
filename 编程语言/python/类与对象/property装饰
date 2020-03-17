@@ -1,0 +1,81 @@
+1.读取赋值限制
+class Person:
+    def __init__(self, first_name):
+        self.first_name = first_name
+
+    # Getter function
+    @property
+    def first_name(self):
+        return self._first_name
+
+    # Setter function
+    @first_name.setter
+    def first_name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Expected a string')
+        self._first_name = value
+
+    # Deleter function (optional)
+    @first_name.deleter
+    def first_name(self):
+        raise AttributeError('Cannot delete  attribute')
+
+## -- End pasted text --
+
+In [2]: a = Person('Guido')
+
+In [3]: a.first_name
+Out[3]: 'Guido'
+
+In [4]: a.first_name = 42
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-4-73dafed1e4ef> in <module>()
+----> 1 a.first_name = 42
+
+<ipython-input-1-db9d006823e3> in first_name(self, value)
+     12     def first_name(self, value):
+     13         if not isinstance(value, str):
+---> 14             raise TypeError('Expected a string')
+     15         self._first_name = value
+     16
+
+TypeError: Expected a string
+
+In [5]: del a.first_name
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+<ipython-input-5-155a1abee7c3> in <module>()
+----> 1 del a.first_name
+
+<ipython-input-1-db9d006823e3> in first_name(self)
+     18     @first_name.deleter
+     19     def first_name(self):
+---> 20         raise AttributeError('Cannot delete  attribute')
+
+AttributeError: Cannot delete  attribute
+
+2.赋值时有运算
+import math
+class Circle:
+    def __init__(self, radius):
+        self.radius = radius
+    @property
+    def area(self):
+        return math.pi * self.radius ** 2
+    @property
+    def perimeter(self):
+        return 2 * math.pi * self.radius
+
+## -- End pasted text --
+
+In [36]: c = Circle(4.0)
+
+In [37]: c.radius
+Out[37]: 4.0
+
+In [38]: c.area
+Out[38]: 50.26548245743669
+
+In [39]: c.perimeter
+Out[39]: 25.132741228718345
