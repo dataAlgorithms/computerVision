@@ -1,0 +1,9 @@
+class Date:
+    __slots__ = ['year', 'month', 'day']
+    def __init__(self, year, month, day):
+        self.year = year
+        self.month = month
+        self.day = day
+        
+说明:
+init的变量必须出现在__slots__中
