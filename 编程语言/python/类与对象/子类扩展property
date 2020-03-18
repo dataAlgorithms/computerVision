@@ -1,0 +1,109 @@
+1.全量扩展
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        if not isinstance(value, str):
+            raise TypeError('Expected a string')
+        self._name = value
+
+    @name.deleter
+    def name(self):
+        raise AttributeError('Cannot delete attribute')
+
+class SubPerson(Person):
+    @property
+    def name(self):
+        print('Getting name')
+        return super().name
+
+    @name.setter
+    def name(self, value):
+        print('Set name to ' ,value)
+        super(SubPerson, SubPerson).name.__set__(self, value)
+
+    @name.deleter
+    def name(self):
+        print('Delete name')
+        super(SubPerson, SubPerson).name.__delete__(self)
+
+2.扩展部分函数
+class SubPerson(Person):
+    @Person.name.getter
+    def name(self):
+        print('Getting name')
+        return super().name
+
+class SubPerson(Person):
+    @Person.name.setter
+    def name(self, value):
+        print('Setting name to', value)
+        super(SubPerson, SubPerson).name.__set__(self, value)
+
+运行:
+In [14]: s = SubPerson('Guido')
+
+In [15]: s.name
+Getting name
+Out[15]: 'Guido'
+
+In [16]: s.name = 'Larry'
+
+In [17]: s.name
+Getting name
+Out[17]: 'Larry'
+
+In [18]: s.name = 42
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-18-507a39ad0510> in <module>()
+----> 1 s.name = 42
+
+<ipython-input-5-c25320c5c8b2> in name(self, value)
+     10     def name(self, value):
+     11         if not isinstance(value, str):
+---> 12             raise TypeError('Expected a string')
+     13         self._name = value
+     14
+
+TypeError: Expected a string
+
+3.描述器
+class String:
+    def __init__(self, name):
+        self.name = name
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self
+        return instance.__dict__[self.name]
+    def __set__(self, instance, value):
+        if not isinstance(value, str):
+            raise TypeError('Expect a string')
+        instance.__dict__[self.name] = value
+
+class Person:
+    name = String('name')
+    def __init__(self, name):
+        self.name = name
+
+class SubPerson(Person):
+    @property
+    def name(self):
+        print('Getting name')
+        return super().name
+
+    @name.setter
+    def name(self, value):
+        print('Setting name to', value)
+        super(SubPerson, SubPerson).name.__set__(self, value)
+
+    @name.deleter
+    def name(self):
+        print('Deleting name')
+        super(SubPerson, SubPerson).name.__delete__(self)
