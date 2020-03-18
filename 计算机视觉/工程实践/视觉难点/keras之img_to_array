@@ -1,0 +1,31 @@
+img_to_array是keras下的一个方法，主要作用就是把numpy矩阵中的整数转换成浮点数。
+
+>>> from keras.preprocessing.image import img_to_array
+/data/zhouping/anaconda3/lib/python3.6/site-packages/h5py/__init__.py:36: 
+FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is 
+deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using TensorFlow backend.
+>>> import cv2
+>>> 
+>>> img = cv2.imread("hy.jpg")
+>>> print("before:",img[..., 2],sep="\n")
+before:
+[[255 255 255 ... 255 255 255]
+ [255 255 255 ... 255 255 255]
+ [255 255 255 ... 255 255 255]
+ ...
+ [129 123 125 ...  75  73  73]
+ [138 126 112 ...  72  70  69]
+ [115 108  99 ...  73  70  68]]
+>>> img = img_to_array(img)
+>>> print("after:",img[..., 2],sep="\n")
+after:
+[[255. 255. 255. ... 255. 255. 255.]
+ [255. 255. 255. ... 255. 255. 255.]
+ [255. 255. 255. ... 255. 255. 255.]
+ ...
+ [129. 123. 125. ...  75.  73.  73.]
+ [138. 126. 112. ...  72.  70.  69.]
+ [115. 108.  99. ...  73.  70.  68.]]
+>>> 
