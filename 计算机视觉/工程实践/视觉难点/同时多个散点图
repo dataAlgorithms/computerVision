@@ -1,0 +1,45 @@
+import sys
+import re
+import os
+import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
+import numpy  as np
+
+s2730 = sys.argv[1]
+s2733 = sys.argv[2]
+
+x0 = []
+y0 = []
+x3 = []
+y3 = []
+#fig = plt.figure()
+with open(s2730) as s0, open(s2733) as s3:
+    for line0, line3 in zip(s0, s3):
+        threshold, wrongrate, passrate = line0.split(" ")
+        wrongrate = wrongrate.split(":")[-1]
+        passrate = passrate.split(":")[-1]
+        x0.append(wrongrate)
+        y0.append(passrate)
+
+        threshold, wrongrate, passrate = line3.split(" ")
+        wrongrate = wrongrate.split(":")[-1]
+        passrate = passrate.split(":")[-1]
+        x3.append(wrongrate)
+        y3.append(passrate)
+
+fig = plt.figure()
+plt.plot(x0, y0, '-ok', color='black', label='2730')
+plt.plot(x3, y3, '-ok', color='red', label='2733')
+plt.legend(loc='upper left', frameon=False)
+plt.xlabel('FPR')
+plt.ylabel('TPR')
+fig.savefig("abc.jpg")  
+'''
+fig, ax = plt.subplots()
+ax.plot(x0, y0, '-ok', label='Sine')
+#ax.plot(x, np.cos(x), '--r', label='Cosine')
+ax.axis('equal')
+leg = ax.legend()
+fig.savefig("abc.jpg") 
+'''
