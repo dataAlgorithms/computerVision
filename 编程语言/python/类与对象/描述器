@@ -1,0 +1,117 @@
+1.类中限制
+In [4]: %paste
+class Integer:
+    def __init__(self, name):
+        self.name = name
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self
+        else:
+            return instance.__dict__[self.name]
+    def __set__(self, instance, value):
+        if not isinstance(value, int):
+            raise TypeError('Expected an int')
+        instance.__dict__[self.name] = value
+
+    def __delete__(self, instance):
+        del instance.__dict__[self.name]
+
+class Point:
+    x = Integer('x')
+    y = Integer('y')
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+## -- End pasted text --
+
+In [5]: p = Point(2, 3)
+
+In [6]: p.x
+Out[6]: 2
+
+In [7]: p.y = 5
+
+In [8]: p.x = 2.3
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-8-a657756721fa> in <module>()
+----> 1 p.x = 2.3
+
+<ipython-input-4-cfd8d94019b6> in __set__(self, instance, value)
+      9     def __set__(self, instance, value):
+     10         if not isinstance(value, int):
+---> 11             raise TypeError('Expected an int')
+     12         instance.__dict__[self.name] = value
+     13
+
+TypeError: Expected an int
+
+In [9]:
+
+2.修饰器
+In [9]: %paste
+class Typed:
+    def __init__(self, name, expected_type):
+        self.name = name
+        self.expected_type = expected_type
+
+    def __get__(self, instance, cls):
+        if instance is None:
+            return self
+        else:
+            return instance.__dict__[self.name]
+
+    def __set__(self, instance, value):
+        if not isinstance(value, self.expected_type):
+            raise TypeError('Expected ' + str(self.expected_type))
+        instance.__dict__[self.name] = value
+
+    def __delete__(self, instance):
+        del instance.__dict__[self.name]
+
+def typeassert(**kwargs):
+    def decorate(cls):
+        for name, expected_type in kwargs.items():
+            setattr(cls, name, Typed(name, expected_type))
+        return cls
+    return decorate
+
+@typeassert(name=str, shares=int, price=float)
+class Stock:
+    def __init__(self, name, shares, price):
+        self.name = name
+        self.shares = shares
+        self.price = price
+
+## -- End pasted text --
+
+In [12]: p = Stock(2, 3, 4.0)
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+<ipython-input-12-d8e4f2fd1fbb> in <module>()
+----> 1 p = Stock(2, 3, 4.0)
+
+<ipython-input-9-64e0c11c9557> in __init__(self, name, shares, price)
+     28 class Stock:
+     29     def __init__(self, name, shares, price):
+---> 30         self.name = name
+     31         self.shares = shares
+     32         self.price = price
+
+<ipython-input-9-64e0c11c9557> in __set__(self, instance, value)
+     12     def __set__(self, instance, value):
+     13         if not isinstance(value, self.expected_type):
+---> 14             raise TypeError('Expected ' + str(self.expected_type))
+     15         instance.__dict__[self.name] = value
+     16
+
+TypeError: Expected <class 'str'>
+
+In [13]: p = Stock('2', 3, 4.0)
+
+In [14]: p
+Out[14]: <__main__.Stock at 0x1e0a545c438>
+
+In [15]: p.name
+Out[15]: '2'
