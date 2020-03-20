@@ -1,0 +1,60 @@
+方法1：matplotlib
+# Helper function to get the classname
+def classname(str):
+    return str.split('/')[-2]
+
+
+# Helper function to get the classname and filename
+def classname_filename(str):
+    return str.split('/')[-2] + '/' + str.split('/')[-1]
+
+
+# Helper functions to plot the nearest images given a query image
+def plot_images(filenames, distances):
+    images = []
+    for filename in filenames:
+        images.append(mpimg.imread(filename))
+    plt.figure(figsize=(20, 10))
+    columns = 4
+    for i, image in enumerate(images):
+        ax = plt.subplot(len(images) / columns + 1, columns, i + 1)
+        if i == 0:
+            ax.set_title("Query Image\n" + classname_filename(filenames[i]))
+        else:
+            ax.set_title("Similar Image\n" + classname_filename(filenames[i]) +
+                         "\nDistance: " +
+                         str(float("{0:.2f}".format(distances[i]))))
+        plt.imshow(image)
+        # To save the plot in a high definition format i.e. PDF, uncomment the following line:
+        #plt.savefig('results/' + str(random.randint(0,10000))+'.pdf', format='pdf', dpi=1000)
+        # We will use this line repeatedly in our code.
+        
+方法2：opencv
+import re
+import sys
+import os
+import cv2
+import numpy as np
+from imutils import build_montages
+
+font = cv2.FONT_HERSHEY_SIMPLEX
+
+fname = sys.argv[1]
+
+vRows = []
+with open(fname) as fn:
+
+    for line in fn:
+        match = re.search(r"feature_id:(.*) top1Candidate:(.*jpg) top1Score:([\d.]+)", line)
+        query = match.group(1)
+        galary = "/data/dgtestdata/algoSdk/face/faceFeature/cardSence/card925/" + match.group(2)
+        score = match.group(3)
+        im1 = cv2.imread(query)
+        im1 = cv2.resize(im1, (400, 400))
+        im2 = cv2.imread(galary)
+        im2 = cv2.resize(im2, (400, 400))
+        cv2.putText(im2, score, (20,30), font, 1, (0,255,0),2)
+        vRows.append(im1)
+        vRows.append(im2)
+montage = build_montages(vRows, (400, 400), (10, len(vRows)/10))[0]
+cv2.imwrite("123.jpg", montage)
